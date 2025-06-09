@@ -1,0 +1,198 @@
+// 主要脚本文件
+const examData = {
+    abilities: [
+        { level: 'A1', color: '#FF5733', name: 'Listening', definition: '...', levelPosition: '...', requirements: '...' },
+        // 其他能力数据
+    ],
+    contentAreas: [
+        { icon: '...', title: '...', description: '...', subAreas: [{ title: '...', textRange: '...', knowledgeRequirements: '...', readingPoints: '...', abilityRequirements: ['...'] }] },
+        // 其他内容区域数据
+    ],
+    writingRequirements: {
+        basic: { icon: '...', title: '...', items: ['...'] },
+        advanced: { icon: '...', title: '...', items: ['...'] }
+    }
+};
+
+class ExamSyllabusApp {
+    constructor() {
+        this.currentSection = 'overview';
+        this.init();
+    }
+
+    init() {
+        this.setupNavigation();
+        this.loadAbilities();
+        this.loadContentAreas();
+        this.loadWritingRequirements();
+        this.setupAnimations();
+    }
+
+    setupNavigation() {
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.content-section');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetSection = btn.dataset.section;
+                
+                // 更新导航状态
+                navButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // 切换内容区域
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetSection) {
+                        section.classList.add('active');
+                    }
+                });
+
+                this.currentSection = targetSection;
+                this.animateSection(targetSection);
+            });
+        });
+    }
+
+    loadAbilities() {
+        const container = document.querySelector('.abilities-container');
+        const template = document.getElementById('ability-card-template');
+
+        examData.abilities.forEach((ability, index) => {
+            const card = template.content.cloneNode(true);
+            
+            card.querySelector('.ability-level').textContent = ability.level;
+            card.querySelector('.ability-level').style.backgroundColor = ability.color;
+            card.querySelector('.ability-name').textContent = ability.name;
+            card.querySelector('.ability-definition').textContent = ability.definition;
+            card.querySelector('.level-position').textContent = ability.levelPosition;
+            card.querySelector('.requirements').textContent = ability.requirements;
+
+            // 添加动画延迟
+            const cardElement = card.querySelector('.ability-card');
+            cardElement.style.animationDelay = `${index * 0.1}s`;
+
+            container.appendChild(card);
+        });
+    }
+
+    loadContentAreas() {
+        const container = document.querySelector('.content-areas');
+        const areaTemplate = document.getElementById('content-area-template');
+        const subAreaTemplate = document.getElementById('sub-area-template');
+
+        examData.contentAreas.forEach((area, index) => {
+            const areaCard = areaTemplate.content.cloneNode(true);
+            
+            areaCard.querySelector('.area-icon').textContent = area.icon;
+            areaCard.querySelector('.area-title').textContent = area.title;
+            areaCard.querySelector('.area-description').textContent = area.description;
+
+            const subAreasContainer = areaCard.querySelector('.sub-areas');
+            
+            area.subAreas.forEach(subArea => {
+                const subAreaCard = subAreaTemplate.content.cloneNode(true);
+                
+                subAreaCard.querySelector('.sub-area-title').textContent = subArea.title;
+                subAreaCard.querySelector('.text-range').innerHTML = `<strong>文本范围：</strong>${subArea.textRange}`;
+                subAreaCard.querySelector('.knowledge-requirements').innerHTML = `<strong>知识要求：</strong>${subArea.knowledgeRequirements}`;
+                subAreaCard.querySelector('.reading-points').innerHTML = `<strong>阅读要点：</strong>${subArea.readingPoints}`;
+                
+                const abilityList = subArea.abilityRequirements.map(req => `<li>${req}</li>`).join('');
+                subAreaCard.querySelector('.ability-requirements').innerHTML = `<strong>能力要求：</strong><ul>${abilityList}</ul>`;
+
+                subAreasContainer.appendChild(subAreaCard);
+            });
+
+            // 添加动画延迟
+            const cardElement = areaCard.querySelector('.content-area-card');
+            cardElement.style.animationDelay = `${index * 0.2}s`;
+
+            container.appendChild(areaCard);
+        });
+    }
+
+    loadWritingRequirements() {
+        const container = document.querySelector('.writing-requirements');
+        const template = document.getElementById('writing-card-template');
+        const itemTemplate = document.getElementById('requirement-item-template');
+
+        [examData.writingRequirements.basic, examData.writingRequirements.advanced].forEach((category, index) => {
+            const card = template.content.cloneNode(true);
+            
+            card.querySelector('.writing-icon').textContent = category.icon;
+            card.querySelector('.writing-title').textContent = category.title;
+
+            const itemsContainer = card.querySelector('.writing-items');
+            
+            category.items.forEach((item, itemIndex) => {
+                const itemCard = itemTemplate.content.cloneNode(true);
+                itemCard.querySelector('.requirement-number').textContent = itemIndex + 1;
+                itemCard.querySelector('.requirement-text').textContent = item;
+                itemsContainer.appendChild(itemCard);
+            });
+
+            // 添加动画延迟
+            const cardElement = card.querySelector('.writing-card');
+            cardElement.style.animationDelay = `${index * 0.3}s`;
+
+            container.appendChild(card);
+        });
+    }
+
+    animateSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        const cards = section.querySelectorAll('.card, .ability-card, .content-area-card, .writing-card');
+        
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    }
+
+    setupAnimations() {
+        // 添加滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有卡片
+        document.querySelectorAll('.card, .ability-card, .content-area-card, .writing-card').forEach(card => {
+            observer.observe(card);
+        });
+    }
+}
+
+// 初始化应用
+document.addEventListener('DOMContentLoaded', () => {
+    new ExamSyllabusApp();
+});
+
+// 添加平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
