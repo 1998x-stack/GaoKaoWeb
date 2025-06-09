@@ -219,3 +219,36 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* Collapsible styles */
+.child-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: background-color 0.2s;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.child-header:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+
+.collapsible-icon {
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+    color: var(--system-gray);
+    font-size: 0.9rem;
+}
+
+.collapsible-title {
+    margin: 0;
+    flex: 1;
+}
+
+.collapsible-content {
+    padding-left: 24px;
+    border-left: 2px solid var(--system-gray-5);
+    margin-left: 7px;
+}

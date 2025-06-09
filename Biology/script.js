@@ -56,22 +56,39 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Children sections
+        // Children sections with collapsible functionality
         if (section.children && section.children.length > 0) {
             section.children.forEach(child => {
                 const childSection = document.createElement('div');
-                childSection.className = 'card-section';
+                childSection.className = 'card-section child-section';
                 
                 let childTitle = child.title;
                 if (child.level) {
                     childTitle = `<span class="ability-level ability-${child.level}">${child.level}</span> ${child.title}`;
                 }
                 
-                const sectionTitle = document.createElement('div');
-                sectionTitle.className = 'card-section-title';
-                sectionTitle.innerHTML = `<i class="fas fa-chevron-right"></i> ${childTitle}`;
-                childSection.appendChild(sectionTitle);
+                // Create collapsible header
+                const sectionHeader = document.createElement('div');
+                sectionHeader.className = 'child-header collapsible';
                 
+                // Add chevron icon for toggle
+                const chevron = document.createElement('i');
+                chevron.className = 'fas fa-chevron-down collapsible-icon';
+                sectionHeader.appendChild(chevron);
+                
+                const sectionTitle = document.createElement('div');
+                sectionTitle.className = 'card-section-title collapsible-title';
+                sectionTitle.innerHTML = childTitle;
+                sectionHeader.appendChild(sectionTitle);
+                
+                childSection.appendChild(sectionHeader);
+                
+                // Create content container
+                const contentContainer = document.createElement('div');
+                contentContainer.className = 'collapsible-content';
+                contentContainer.style.display = 'block'; // Default to expanded
+                
+                // Child items
                 if (child.items && child.items.length > 0) {
                     const list = document.createElement('ul');
                     list.className = 'card-list';
@@ -82,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         list.appendChild(li);
                     });
                     
-                    childSection.appendChild(list);
+                    contentContainer.appendChild(list);
                 }
                 
                 // Child content (if any)
@@ -111,9 +128,20 @@ document.addEventListener('DOMContentLoaded', () => {
                             subSectionDiv.appendChild(subList);
                         }
                         
-                        childSection.appendChild(subSectionDiv);
+                        contentContainer.appendChild(subSectionDiv);
                     });
                 }
+                
+                childSection.appendChild(contentContainer);
+                
+                // Add click event for collapsible
+                sectionHeader.addEventListener('click', () => {
+                    const isExpanded = contentContainer.style.display === 'block';
+                    contentContainer.style.display = isExpanded ? 'none' : 'block';
+                    chevron.className = isExpanded 
+                        ? 'fas fa-chevron-right collapsible-icon' 
+                        : 'fas fa-chevron-down collapsible-icon';
+                });
                 
                 content.appendChild(childSection);
             });

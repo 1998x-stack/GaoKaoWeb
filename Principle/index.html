@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高考大纲集 - Subject Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --system-blue: #007AFF;
+            --system-blue-dark: #0056b3;
+            --system-gray-6: #F2F2F7;
+            --system-gray-5: #E5E5EA;
+            --system-gray-4: #D1D1D6;
+            --system-gray-3: #C7C7CC;
+            --system-gray-2: #AEAEB2;
+            --system-gray: #8E8E93;
+            --system-label: #000000;
+            --system-background: #FFFFFF;
+            --system-purple: #9B59B6;
+            --system-purple-dark: #8E44AD;
+            --card-corner-radius: 18px;
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --section-spacing: 36px;
+            --transition-speed: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--system-gray-6);
+            color: var(--system-label);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--system-blue) 0%, var(--system-blue-dark) 100%);
+            color: white;
+            padding: 100px 20px 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 30%, rgba(255,255,255,0.2) 0%, transparent 30%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* 大纲总纲卡片 */
+        .outline-card {
+            background-color: var(--system-background);
+            border-radius: var(--card-corner-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            max-width: 900px;
+            margin: -30px auto 40px;
+            position: relative;
+            z-index: 10;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .outline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .outline-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--system-gray-5);
+        }
+
+        .outline-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--system-purple) 0%, var(--system-purple-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .outline-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .outline-content {
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .outline-content p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .outline-highlight {
+            background-color: rgba(155, 89, 182, 0.1);
+            border-left: 4px solid var(--system-purple);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .outline-download {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--system-purple) 0%, var(--system-purple-dark) 100%);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .outline-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+
+        .outline-download i {
+            margin-right: 8px;
+        }
+
+        .welcome-message {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .welcome-message h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .welcome-message p {
+            font-size: 1.1rem;
+            color: var(--system-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto 80px;
+        }
+
+        .subject-card {
+            background-color: var(--system-background);
+            border-radius: var(--card-corner-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .subject-gradient {
+            height: 140px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subject-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            background-color: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .subject-info {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .subject-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subject-chinese {
+            font-size: 1.1rem;
+            color: var(--system-gray);
+            margin-bottom: 24px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--system-blue);
+            color: var(--system-blue);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(0, 122, 255, 0.1);
+        }
+
+        .btn-solid {
+            background-color: var(--system-blue);
+            color: white;
+        }
+
+        .btn-solid:hover {
+            background-color: #0062CC;
+        }
+
+        .subject-card .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: var(--system-gray);
+            font-size: 0.95rem;
+            background-color: #000;
+            color: rgba(255,255,255,0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 80%);
+            pointer-events: none;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+            line-height: 1.8;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 80px 20px 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.4rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .outline-card {
+                margin: -20px auto 30px;
+                padding: 20px;
+            }
+            
+            .outline-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .outline-icon {
+                margin: 0 auto 15px;
+            }
+            
+            .outline-title {
+                font-size: 1.6rem;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .welcome-message h2 {
+                font-size: 1.9rem;
+            }
+            
+            .subject-gradient {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>高考大纲集</h1>
+            <p>普通高等学校招生全国统一考试科目大纲</p>
+        </div>
+    </header>
+
+    <!-- 高考大纲总纲卡片 -->
+    <div class="outline-card">
+        <div class="outline-header">
+            <div class="outline-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <h2 class="outline-title">高考大纲总纲</h2>
+        </div>
+        
+        <div class="outline-content">
+            <p>普通高等学校招生全国统一考试(以下简称"高考")是合格的高中毕业生和具有同等学力的考生参加的选拔性考试。高等学校根据考生成绩，按已确定的招生计划，德、智、体全面衡量，择优录取。因此，高考应具有较高的信度、效度，必要的区分度和适当的难度。</p>
+            
+            <div class="outline-highlight">
+                <strong>考试大纲的重要性</strong>
+                <p>《考试大纲》是高考命题的规范性文件和标准，是考试评价、复习备考的依据。它明确了高考的性质和功能，规定了考试内容与形式，对指导高考内容改革、规范高考命题都有重要意义。</p>
+            </div>
+            
+            <p>《国务院关于深化考试招生制度改革的实施意见》明确提出深化高考考试内容改革，依据高校人才选拔要求和国家课程标准，科学设计命题内容，增强基础性、综合性，着重考查学生独立思考和运用所学知识分析问题、解决问题的能力。</p>
+            
+            <p>高考评价体系通过确立"立德树人、服务选拔、导向教学"这一高考核心立场，回答了"为什么考"的问题;通过明确"必备知识、关键能力、学科素养、核心价值"四层考查目标以及"基础性、综合性、应用性、创新性"四个方面的考查要求，回答了高考"考什么"和"怎么考"的问题。</p>
+            
+            <p>《考试大纲》是教育部考试中心和各分省命题省市在命题中都应当严格遵循的，是制定《考试说明》的原则依据。各分省命题省市在《考试大纲》的基础上，结合本省市高考方案和教学实际制订符合本省市的《考试说明》。</p>
+        </div>
+        
+        <a href="高考-总纲.pdf" class="outline-download" download>
+            <i class="fas fa-download"></i> 下载总纲PDF
+        </a>
+    </div>
+
+    <div class="welcome-message">
+        <h2>各科目高考大纲中心</h2>
+        <p>此页面汇集了各科高考教学大纲，包括语文、数学、英语、物理、化学、生物、历史、地理、政治等科目。点击下方科目卡片可查看详细大纲内容或下载PDF版本。</p>
+    </div>
+
+    <div class="subjects-grid">
+        <!-- 各学科卡片保持不变... -->
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>高考大纲集</h3>
+            <p>本系统汇集了普通高等学校招生全国统一考试所有科目的大纲文档</p>
+            <p>涵盖2023年教育部发布的各学科考试范围与要求</p>
+            <div class="copyright">
+                © 2023 普通高等学校招生全国统一考试 | 依据教育部课程方案和课程标准
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
