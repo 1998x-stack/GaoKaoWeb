@@ -1,0 +1,607 @@
+/* Apple Dynamic System Colors & Modern Design */
+:root {
+    /* System Colors */
+    --system-blue: #007AFF;
+    --system-indigo: #5856D6;
+    --system-purple: #AF52DE;
+    --system-teal: #30D5C8;
+    --system-pink: #FF2D55;
+    --system-orange: #FF9500;
+    --system-green: #34C759;
+    --system-red: #FF3B30;
+    
+    /* Gray Scale */
+    --system-gray-0: #FFFFFF;
+    --system-gray-1: #FBFBFB;
+    --system-gray-2: #F6F6F6;
+    --system-gray-3: #F2F2F7;
+    --system-gray-4: #E5E5EA;
+    --system-gray-5: #D1D1D6;
+    --system-gray-6: #C7C7CC;
+    --system-gray-7: #AEAEB2;
+    --system-gray-8: #8E8E93;
+    --system-gray-9: #636366;
+    --system-gray-10: #484848;
+    --system-gray-11: #3A3A3C;
+    --system-gray-12: #2C2C2E;
+    --system-gray-13: #1C1C1E;
+    --system-gray-14: #000000;
+    
+    /* Dynamic Background Colors */
+    --system-background: var(--system-gray-0);
+    --system-secondary-background: var(--system-gray-2);
+    --system-tertiary-background: var(--system-gray-3);
+    
+    /* Text Colors */
+    --system-primary-label: var(--system-gray-14);
+    --system-secondary-label: var(--system-gray-9);
+    --system-tertiary-label: var(--system-gray-6);
+    --system-quaternary-label: var(--system-gray-5);
+    
+    /* Card & Surface Elements */
+    --card-corner-radius: 18px;
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --section-spacing: 36px;
+    --transition-speed: 0.4s;
+    
+    /* Adaptive Elements */
+    --system-accent-color: var(--system-blue);
+    --system-link-color: var(--system-blue);
+}
+
+/* System Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Dark Mode Background Colors */
+        --system-background: var(--system-gray-13);
+        --system-secondary-background: var(--system-gray-12);
+        --system-tertiary-background: var(--system-gray-11);
+        
+        /* Dark Mode Text Colors */
+        --system-primary-label: var(--system-gray-0);
+        --system-secondary-label: var(--system-gray-4);
+        --system-tertiary-label: var(--system-gray-6);
+        --system-quaternary-label: var(--system-gray-7);
+    }
+}
+
+/* Reduce Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+    :root {
+        --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--system-tertiary-background);
+    color: var(--system-primary-label);
+    line-height: 1.6;
+    overflow-x: hidden;
+    padding-bottom: 60px;
+}
+
+/* Header with Dynamic Gradient */
+.header {
+    background: linear-gradient(135deg, var(--system-blue) 0%, #0045CC 100%);
+    background: -webkit-linear-gradient(135deg, var(--system-blue) 0%, #0045CC 100%);
+    color: white;
+    padding: 100px 20px 60px;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 30%, rgba(255,255,255,0.2) 0%, transparent 30%);
+    pointer-events: none;
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.header p {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+/* Filter Bar with Dynamic Styling */
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    gap: 12px;
+    background-color: var(--system-background);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--system-gray-4);
+    transition: all var(--transition-speed) ease;
+}
+
+.filter-bar.mobile-open {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.filter-option {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background-color: var(--system-gray-4);
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.filter-option.active {
+    background-color: var(--system-accent-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.filter-option:hover:not(.active) {
+    background-color: var(--system-gray-5);
+    transform: translateY(-1px);
+}
+
+/* Cards Container with Dynamic Grid */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+    gap: 24px;
+    padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Card Styles with Dynamic Elevation */
+.card {
+    background-color: var(--system-background);
+    border-radius: var(--card-corner-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--system-gray-4);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.02) 0%, transparent 100%);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    background-color: rgba(255,255,255,0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    flex: 1;
+    line-height: 1.3;
+    color: var(--system-primary-label);
+}
+
+.card-content {
+    padding: 24px;
+    flex: 1;
+    color: var(--system-primary-label);
+}
+
+.card-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--system-gray-3);
+}
+
+.card-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.card-section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--system-accent-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.card-section-title i {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.card-list {
+    padding-left: 24px;
+    margin-top: 8px;
+}
+
+.card-list li {
+    margin-bottom: 10px;
+    position: relative;
+    line-height: 1.5;
+    color: var(--system-secondary-label);
+}
+
+.card-list li::marker {
+    color: var(--system-gray-6);
+}
+
+.ability-level {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-right: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ability-A { background-color: #FFF5CC; color: #8E6C00; border: 1px solid #FFEAA7; }
+.ability-B { background-color: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+.ability-C { background-color: #E3F2FD; color: #1565C0; border: 1px solid #BBDEFB; }
+.ability-D { background-color: #F3E5F5; color: #7B1FA2; border: 1px solid #E1BEE7; }
+.ability-E { background-color: #FFF3E0; color: #E65100; border: 1px solid #FFE0B2; }
+.ability-F { background-color: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
+
+.card-footer {
+    padding: 20px 24px;
+    background-color: var(--system-secondary-background);
+    border-top: 1px solid var(--system-gray-4);
+    font-size: 0.9rem;
+    color: var(--system-tertiary-label);
+    font-style: italic;
+}
+
+/* Collapsible Section Styles */
+.child-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 12px 0;
+    transition: all 0.2s ease;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    background-color: var(--system-secondary-background);
+    padding-left: 12px;
+}
+
+.child-header:hover {
+    background-color: var(--system-gray-4);
+}
+
+.collapsible-icon {
+    margin-right: 12px;
+    transition: transform var(--transition-speed) ease;
+    color: var(--system-tertiary-label);
+    font-size: 0.9rem;
+    width: 16px;
+    text-align: center;
+}
+
+.collapsible-title {
+    margin: 0;
+    flex: 1;
+    font-weight: 500;
+    color: var(--system-secondary-label);
+}
+
+.collapsible-content {
+    padding-left: 32px;
+    border-left: 2px solid var(--system-gray-4);
+    margin-left: 11px;
+    transition: all var(--transition-speed) ease;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 60px 20px 40px;
+    color: var(--system-tertiary-label);
+    font-size: 0.95rem;
+    background-color: var(--system-secondary-background);
+    margin-top: var(--section-spacing);
+    border-top: 1px solid var(--system-gray-4);
+}
+
+.footer h3 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--system-primary-label);
+}
+
+.footer p {
+    margin-bottom: 8px;
+    line-height: 1.8;
+    color: var(--system-secondary-label);
+}
+
+.copyright {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--system-gray-4);
+    font-size: 0.9rem;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    
+    .header {
+        padding: 80px 20px 50px;
+    }
+    
+    .filter-bar {
+        gap: 8px;
+    }
+    
+    .filter-option {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+    }
+    
+    .header {
+        padding: 70px 16px 40px;
+    }
+    
+    .header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .filter-bar {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        flex-direction: row;
+        max-height: none;
+        position: static;
+    }
+    
+    .filter-option {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        flex: 1 1 auto;
+        min-width: 100px;
+        text-align: center;
+    }
+    
+    .card-header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .card-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+    }
+    
+    .card-content {
+        padding: 20px;
+    }
+    
+    .collapsible-content {
+        padding-left: 20px;
+        margin-left: 5px;
+    }
+    
+    .footer {
+        padding: 40px 16px 30px;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 60px 16px 30px;
+    }
+    
+    .header h1 {
+        font-size: 1.9rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+    }
+    
+    .filter-bar {
+        padding: 10px 12px;
+    }
+    
+    .filter-option {
+        padding: 7px 12px;
+        font-size: 0.8rem;
+        min-width: 80px;
+    }
+    
+    .card-header {
+        padding: 16px;
+    }
+    
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .card-title {
+        font-size: 1.3rem;
+    }
+    
+    .card-content {
+        padding: 16px;
+    }
+    
+    .card-section-title {
+        font-size: 1.05rem;
+    }
+    
+    .footer {
+        padding: 30px 16px 20px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .card {
+        transition: box-shadow var(--transition-speed) ease;
+    }
+    
+    .card:hover {
+        transform: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .filter-option {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .child-header {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .filter-bar,
+    .mobile-menu-btn {
+        display: none;
+    }
+    
+    .card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .header {
+        background: none !important;
+        color: black !important;
+    }
+    
+    body {
+        padding-bottom: 0;
+    }
+}

@@ -184,3 +184,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Mobile menu toggle functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Add mobile menu button if needed
+    const header = document.querySelector('.header');
+    if (header && !document.querySelector('.mobile-menu-btn')) {
+        const menuBtn = document.createElement('button');
+        menuBtn.className = 'mobile-menu-btn';
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        menuBtn.addEventListener('click', () => {
+            const filterBar = document.querySelector('.filter-bar');
+            filterBar.classList.toggle('mobile-open');
+        });
+        
+        header.appendChild(menuBtn);
+    }
+});
