@@ -6,7 +6,7 @@ const syllabusData = [
         iconColor: "#007AFF",
         content: [
             {
-                title: "依据",
+                title: "考核依据",
                 items: [
                     "根据普通高等学校对新生文化素质的要求",
                     "依据中华人民共和国教育部颁布的《普通高中物理课程标准》"

@@ -6,7 +6,7 @@ const syllabusData = [
         iconColor: "#007AFF",
         content: [
             {
-                title: "依据",
+                title: "考核依据",
                 items: [
                     "根据普通高等学校对新生文化素质的要求",
                     "依据中华人民共和国教育部颁布的《普通高中生物学课程标准》"
@@ -194,7 +194,7 @@ const syllabusData = [
         ],
         children: [
             {
-                title: "(一) 遗传的细胞基础",
+                title: "(一) 遰传的细胞基础",
                 items: [
                     "减数分裂的概念和过程",
                     "动物配子的形成过程",
@@ -202,7 +202,7 @@ const syllabusData = [
                 ]
             },
             {
-                title: "(二) 遗传的分子基础",
+                title: "(二) 遰传的分子基础",
                 items: [
                     "人类对遗传物质的探索过程",
                     "DNA分子结构的主要特点",
@@ -212,7 +212,7 @@ const syllabusData = [
                 ]
             },
             {
-                title: "(三) 遗传的基本规律",
+                title: "(三) 遰传的基本规律",
                 items: [
                     "孟德尔遗传实验的科学方法",
                     "基因的分离定律和自由组合定律",

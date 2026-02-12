@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Website](https://img.shields.io/badge/Website-Visit-Green)](https://gaokao-web.pages.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![GitHub Pages](https://github.com/1998x-stack/GaoKaoWeb/actions/workflows/pages.yml/badge.svg)](https://github.com/1998x-stack/GaoKaoWeb/actions/workflows/pages.yml)
+[![Website](https://img.shields.io/badge/Website-Visit-Green)](https://gaokao-web.pages.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![GitHub Pages](https://github.com/1998x-stack/GaoKaoWeb/actions/workflows/deploy.yml/badge.svg)](https://github.com/1998x-stack/GaoKaoWeb/actions/workflows/deploy.yml)
 
 </div>
 
