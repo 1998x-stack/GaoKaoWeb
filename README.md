@@ -1,5 +1,11 @@
 # 🎓 高考大纲集项目
 
+<div align="center">
+
+[![Website](https://img.shields.io/badge/Website-Visit-Green)](https://gaokao-web.pages.dev) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![GitHub Pages](https://github.com/1998x-stack/GaoKaoWeb/actions/workflows/pages.yml/badge.svg)](https://github.com/1998x-stack/GaoKaoWeb/actions/workflows/pages.yml)
+
+</div>
+
 ## 📌 项目概述
 
 **高考大纲集** 是一个专为中国高考考生打造的在线资源平台，整合教育部发布的普通高等学校招生全国统一考试（高考）各科目考试大纲，旨在为考生提供 **权威、全面、便捷** 的大纲查询与学习支持，帮助考生科学备考、精准掌握考试要求。
@@ -8,98 +14,147 @@
 
 ## ✨ 功能特点
 
-* 📚 **全面覆盖**：涵盖语文、数学、英语等 **9 大高考科目**
+* 📚 **全面覆盖**：涵盖语文、数学、英语、物理、化学、生物、历史、地理、政治等 **9 大高考科目**
 * 📄 **权威内容**：基于 **教育部官方考试大纲**
 * 🌐 **双模式查看**：支持 **在线浏览** 与 **PDF 下载**
 * 📱 **响应式设计**：兼容多终端屏幕尺寸
 * 🎨 **美观界面**：现代化 UI 设计，提升用户体验
 * 🔍 **快速导航**：清晰的科目分类与卡片式布局
+* 🎯 **智能检索**：支持按主题过滤内容
+* 📊 **结构化展示**：清晰的内容层级与分类
 
 ---
 
-## 🗂️ 项目结构
+## 🏗️ 项目架构
 
-```bash
-高考大纲集/
-├── index.html                   # 主入口页面
-├── README.md                    # 项目说明文档
-├── 总纲/
-│   └── 高考-总纲.pdf             # 高考总纲 PDF 文档
-├── Biology/
-│   ├── chinese.html             # 生物在线大纲页面
-│   └── 高考-生物大纲.pdf         # 生物 PDF 大纲
-├── Chemistry/
-│   ├── chinese.html             # 化学在线大纲页面
-│   └── 高考-化学大纲.pdf         # 化学 PDF 大纲
-├── Chinese/
-│   ├── chinese.html             # 语文在线大纲页面
-│   └── 高考-语文大纲.pdf         # 语文 PDF 大纲
-├── English/
-│   ├── chinese.html             # 英语在线大纲页面
-│   └── 高考-英语大纲.pdf         # 英语 PDF 大纲
-├── Geography/
-│   ├── chinese.html             # 地理在线大纲页面
-│   └── 高考-地理大纲.pdf         # 地理 PDF 大纲
-├── History/
-│   ├── chinese.html             # 历史在线大纲页面
-│   └── 高考-历史大纲.pdf         # 历史 PDF 大纲
-├── HumanitiesMath/
-│   ├── chinese.html             # 文科数学在线大纲
-│   └── 高考-文科数学大纲.pdf     # 文科数学 PDF
-├── Physics/
-│   ├── chinese.html             # 物理在线大纲页面
-│   └── 高考-物理大纲.pdf         # 物理 PDF 大纲
-├── Politic/
-│   ├── chinese.html             # 思政在线大纲页面
-│   └── 高考-思想政治大纲.pdf     # 思政 PDF 大纲
-└── ScienceMath/
-    ├── chinese.html             # 理科数学在线大纲
-    └── 高考-理科数学大纲.pdf     # 理科数学 PDF
+```
+GaoKaoWeb/
+├── index.html              # 主入口页面
+├── README.md               # 项目说明文档
+├── 0-Files/                # 通用文档目录
+│   └── 高考-汉语大纲.pdf    # 汉语大纲文档
+├── Principle/              # 高考总纲目录
+│   ├── index.html          # 总纲页面
+│   └── 高考-总纲.pdf       # 总纲文档
+├── Biology/                # 生物学科目录
+│   ├── chinese.html        # 生物大纲页面
+│   ├── data.js            # 生物数据
+│   ├── script.js          # 生物脚本
+│   ├── styles.css         # 生物样式
+│   └── 高考-生物大纲.pdf   # 生物PDF文档
+├── Chemistry/              # 化学学科目录
+│   ├── chinese.html        # 化学大纲页面
+│   ├── data.js            # 化学数据
+│   ├── script.js          # 化学脚本
+│   ├── styles.css         # 化学样式
+│   └── 高考-化学大纲.pdf   # 化学PDF文档
+├── Chinese/                # 语文学科目录
+│   ├── chinese.html        # 语文大纲页面
+│   ├── data.js            # 语文数据
+│   ├── script.js          # 语文脚本
+│   ├── styles.css         # 语文样式
+│   └── 高考-语文大纲.pdf   # 语文PDF文档
+├── English/                # 英语学科目录
+│   ├── chinese.html        # 英语大纲页面
+│   ├── data.js            # 英语数据
+│   ├── script.js          # 英语脚本
+│   ├── styles.css         # 英语样式
+│   └── 高考-英语大纲.pdf   # 英语PDF文档
+├── Geography/              # 地理学科目录
+│   ├── chinese.html        # 地理大纲页面
+│   ├── data.js            # 地理数据
+│   ├── script.js          # 地理脚本
+│   ├── styles.css         # 地理样式
+│   └── 高考-地理大纲.pdf   # 地理PDF文档
+├── History/                # 历史学科目录
+│   ├── chinese.html        # 历史大纲页面
+│   ├── data.js            # 历史数据
+│   ├── script.js          # 历史脚本
+│   ├── styles.css         # 历史样式
+│   └── 高考-历史大纲.pdf   # 历史PDF文档
+├── HumanitiesMath/         # 文科数学目录
+│   ├── chinese.html        # 文科数学页面
+│   ├── data.js            # 文科数学数据
+│   ├── script.js          # 文科数学脚本
+│   ├── styles.css         # 文科数学样式
+│   └── 高考-文科数学大纲.pdf # 文科数学PDF文档
+├── Physics/                # 物理学科目录
+│   ├── chinese.html        # 物理大纲页面
+│   ├── data.js            # 物理数据
+│   ├── script.js          # 物理脚本
+│   ├── styles.css         # 物理样式
+│   └── 高考-物理大纲.pdf   # 物理PDF文档
+├── Politic/                # 政治学科目录
+│   ├── chinese.html        # 政治大纲页面
+│   ├── data.js            # 政治数据
+│   ├── script.js          # 政治脚本
+│   ├── styles.css         # 政治样式
+│   └── 高考-思想政治大纲.pdf # 政治PDF文档
+└── ScienceMath/            # 理科数学目录
+    ├── chinese.html        # 理科数学页面
+    ├── data.js            # 理科数学数据
+    ├── script.js          # 理科数学脚本
+    ├── styles.css         # 理科数学样式
+    └── 高考-理科数学大纲.pdf # 理科数学PDF文档
 ```
 
 ---
 
-## 📖 使用指南
+## 🚀 快速开始
 
-### ✅ 在线访问
+### 本地运行
 
-1. 打开项目主页面：`index.html`
-2. 浏览高考大纲总纲
-3. 选择学科卡片，点击进入
-4. 选择：
+1. 克隆仓库：
+   ```bash
+   git clone git@github.com:1998x-stack/GaoKaoWeb.git
+   ```
 
-   * 🔍 “在线查看”浏览内容
-   * 💾 “PDF下载”保存到本地
+2. 进入项目目录：
+   ```bash
+   cd GaoKaoWeb
+   ```
 
----
+3. 直接在浏览器中打开 `index.html` 文件即可访问网站
 
-## 🧪 开发环境
+### 部署到 GitHub Pages
 
-* 克隆仓库：`git clone [仓库地址]`
-* 使用任意现代浏览器打开 `index.html`
-* **零依赖**：纯 HTML + CSS 开发，无需额外构建工具
+项目已配置自动部署到 GitHub Pages，每次提交代码后会自动构建和部署。
 
 ---
 
 ## 🛠️ 技术栈
 
-| 类型    | 技术                                         |
-| ----- | ------------------------------------------ |
-| 前端    | HTML5、CSS3                                 |
-| UI 框架 | 纯 CSS 实现                                   |
-| 图标库   | [Font Awesome 6](https://fontawesome.com/) |
-| 设计规范  | Apple Human Interface Guidelines           |
-| 响应式   | 媒体查询（Media Query）实现适配                      |
+| 类型 | 技术 | 版本/规格 |
+|------|------|-----------|
+| 前端框架 | HTML5、CSS3、JavaScript ES6+ | 最新版 |
+| UI 设计 | 响应式设计、Apple HIG 风格 | 自适应布局 |
+| 图标库 | Font Awesome 6 | 最新版 |
+| 构建工具 | GitHub Actions | 自动化部署 |
+| 部署平台 | GitHub Pages | 静态网站托管 |
+
+### 开发规范
+
+- **编码规范**：UTF-8 编码
+- **代码风格**：遵循标准 HTML/CSS/JS 规范
+- **响应式设计**：支持桌面端、平板、手机等设备
+- **性能优化**：静态资源压缩、懒加载
 
 ---
 
 ## 🎨 设计理念
 
+### 视觉设计
 * **卡片式布局**：一目了然展示学科内容
-* **渐变配色**：区分文理类别
+* **渐变配色**：区分文理类别（蓝色系-理科，橙色系-文科）
 * **悬浮动效**：增加交互感
 * **白留空间**：提高信息可读性
 * **深色模式支持**：护眼友好
+
+### 用户体验
+* **直观导航**：清晰的科目分类
+* **智能过滤**：按主题快速检索内容
+* **快速加载**：优化静态资源
+* **无障碍支持**：良好的键盘导航
 
 ---
 
@@ -113,23 +168,84 @@
 
 ## 🤝 贡献指南
 
-欢迎任何形式的贡献！您可以：
+我们欢迎任何形式的贡献！
 
-* 报告内容错误或大纲版本更新
-* 提交 UI/UX 改进建议
-* 优化移动端兼容性
-* 添加新功能（🔎 搜索、🔖 书签 等）
+### 如何贡献
+
+1. Fork 项目
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+### 贡献类型
+
+* 🐛 **Bug 修复**：修复现有功能的错误
+* 🔧 **功能增强**：添加新的功能特性
+* 📝 **文档完善**：改进项目文档
+* 🎨 **UI 设计**：优化用户界面和交互
+* 🌐 **多语言**：添加国际化支持
+* 📱 **移动适配**：优化移动端体验
+
+---
+
+## 🚀 部署指南
+
+### GitHub Pages 自动部署
+
+项目已配置 GitHub Actions 自动部署：
+
+1. 推送代码到主分支
+2. GitHub Actions 将自动构建并部署到 GitHub Pages
+3. 访问 `https://<username>.github.io/<repository>` 查看网站
+
+### 自定义域名
+
+如需配置自定义域名：
+1. 在仓库设置中添加自定义域名
+2. 在项目根目录创建 `CNAME` 文件并添加域名
+
+---
+
+## ⚙️ 项目维护
+
+### 当前状态
+
+- ✅ 主页功能完善
+- ✅ 各学科页面优化
+- ✅ 响应式设计完成
+- ✅ GitHub Pages 部署配置
+- 🔄 持续内容更新
+
+### 路线图
+
+- 🔍 添加搜索功能
+- 📊 增加统计数据
+- 🌐 国际化支持
+- 📱 PWA 应用支持
+- 📅 更新最新大纲
 
 ---
 
 ## 📬 联系方式
 
-如有任何问题或建议，请联系项目维护团队：
+欢迎通过以下方式联系项目维护团队：
 
-📧 **[gaokao-outline@example.com](mailto:gaokao-outline@example.com)**
+* 📧 **邮箱**：[gaokao-outline@example.com](mailto:gaokao-outline@example.com)
+* 💬 **Issue**：[GitHub Issues](https://github.com/1998x-stack/GaoKaoWeb/issues)
+* 📝 **Pull Request**：[GitHub PRs](https://github.com/1998x-stack/GaoKaoWeb/pulls)
 
 ---
 
-> 普通高等学校招生全国统一考试
-> 依据教育部课程方案与课程标准
-> **2023 高考大纲集项目组**
+## 📜 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
+
+---
+
+<div align="center">
+
+**高考大纲集 | 2023-2026**  
+助力每一位考生，成就美好未来！🎯
+
+</div>
