@@ -8,249 +8,363 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <h1>高考大纲集</h1>
-            <p>普通高等学校招生全国统一考试科目大纲</p>
+    <header class="hero-header">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">高考大纲集</h1>
+                <p class="hero-subtitle">普通高等学校招生全国统一考试科目大纲</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">核心科目</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">文理</div>
+                    <div class="stat-label">全面覆盖</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">实时</div>
+                    <div class="stat-label">更新资源</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-elements">
+                <div class="floating-element elem-1"></div>
+                <div class="floating-element elem-2"></div>
+                <div class="floating-element elem-3"></div>
+            </div>
         </div>
     </header>
 
-    <div class="welcome-message">
-        <h2>各科目高考大纲中心</h2>
-        <p>此页面汇集了各科高考教学大纲，包括语文、数学、英语、物理、化学、生物、历史、地理、政治等科目。点击下方科目卡片可查看详细大纲内容或下载PDF版本。</p>
+    <div class="container">
+        <div class="intro-section">
+            <div class="intro-content">
+                <h2 class="section-title">各科目高考大纲中心</h2>
+                <p class="section-description">此页面汇集了各科高考教学大纲，包括语文、数学、英语、物理、化学、生物、历史、地理、政治等科目。点击下方科目卡片可查看详细大纲内容或下载PDF版本。</p>
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="liberal">文科</button>
+                <button class="filter-btn" data-filter="science">理科</button>
+            </div>
+        </div>
+
+        <div class="subjects-grid" id="subjectsGrid">
+            <!-- Biology -->
+            <div class="subject-card science" data-category="science">
+                <div class="card-badge">理科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #3BD46F 0%, #1A936F 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Biology</h3>
+                        <div class="subject-chinese">生物</div>
+                        <div class="card-actions">
+                            <a href="Biology/biology.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="Biology/高考-生物大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chemistry -->
+            <div class="subject-card science" data-category="science">
+                <div class="card-badge">理科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #FF6B6B 0%, #C73B69 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Chemistry</h3>
+                        <div class="subject-chinese">化学</div>
+                        <div class="card-actions">
+                            <a href="Chemistry/chemistry.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="Chemistry/高考-化学大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chinese -->
+            <div class="subject-card liberal" data-category="liberal">
+                <div class="card-badge">文科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #FF9500 0%, #D35400 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Chinese</h3>
+                        <div class="subject-chinese">语文</div>
+                        <div class="card-actions">
+                            <a href="Chinese/chinese.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="Chinese/高考-语文大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English -->
+            <div class="subject-card liberal" data-category="liberal">
+                <div class="card-badge">文科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #5E6CEB 0%, #3C4BBA 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">English</h3>
+                        <div class="subject-chinese">英语</div>
+                        <div class="card-actions">
+                            <a href="English/english.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="English/高考-英语大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Geography -->
+            <div class="subject-card liberal" data-category="liberal">
+                <div class="card-badge">文科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #5DADE2 0%, #3498DB 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Geography</h3>
+                        <div class="subject-chinese">地理</div>
+                        <div class="card-actions">
+                            <a href="Geography/geography.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="Geography/高考-地理大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div class="subject-card liberal" data-category="liberal">
+                <div class="card-badge">文科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #A569BD 0%, #8E44AD 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">History</h3>
+                        <div class="subject-chinese">历史</div>
+                        <div class="card-actions">
+                            <a href="History/history.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="History/高考-历史大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Humanities Math -->
+            <div class="subject-card liberal" data-category="liberal">
+                <div class="card-badge">文科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #48C9B0 0%, #16A085 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Humanities Math</h3>
+                        <div class="subject-chinese">文科数学</div>
+                        <div class="card-actions">
+                            <a href="HumanitiesMath/humanitiesmath.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="HumanitiesMath/高考-文科数学大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physics -->
+            <div class="subject-card science" data-category="science">
+                <div class="card-badge">理科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #EB984E 0%, #D35400 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Physics</h3>
+                        <div class="subject-chinese">物理</div>
+                        <div class="card-actions">
+                            <a href="Physics/physics.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="Physics/高考-物理大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Politic -->
+            <div class="subject-card liberal" data-category="liberal">
+                <div class="card-badge">文科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Politic</h3>
+                        <div class="subject-chinese">思想政治</div>
+                        <div class="card-actions">
+                            <a href="Politic/politic.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="Politic/高考-思想政治大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Science Math -->
+            <div class="subject-card science" data-category="science">
+                <div class="card-badge">理科</div>
+                <div class="card-wrapper">
+                    <div class="card-gradient" style="background: linear-gradient(135deg, #3498DB 0%, #2C3E50 100%);">
+                        <div class="card-icon">
+                            <i class="fas fa-square-root-alt"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="subject-name">Science Math</h3>
+                        <div class="subject-chinese">理科数学</div>
+                        <div class="card-actions">
+                            <a href="ScienceMath/sciencemath.html" class="action-btn view-btn">
+                                <i class="fas fa-desktop"></i> 在线查看
+                            </a>
+                            <a href="ScienceMath/高考-理科数学大纲.pdf" class="action-btn download-btn" download>
+                                <i class="fas fa-download"></i> PDF下载
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="subjects-grid">
-        <!-- Biology -->
-        <div class="subject-card">
-            <div class="badge">理科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #3BD46F 0%, #1A936F 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-dna"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Biology</h3>
-                <div class="subject-chinese">生物</div>
-                <div class="btn-container">
-                    <a href="Biology/biology.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="Biology/高考-生物大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chemistry -->
-        <div class="subject-card">
-            <div class="badge">理科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #FF6B6B 0%, #C73B69 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-flask"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Chemistry</h3>
-                <div class="subject-chinese">化学</div>
-                <div class="btn-container">
-                    <a href="Chemistry/chemistry.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="Chemistry/高考-化学大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chinese -->
-        <div class="subject-card">
-            <div class="badge">文科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #FF9500 0%, #D35400 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-book"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Chinese</h3>
-                <div class="subject-chinese">语文</div>
-                <div class="btn-container">
-                    <a href="Chinese/chinese.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="Chinese/高考-语文大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- English -->
-        <div class="subject-card">
-            <div class="badge">文科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #5E6CEB 0%, #3C4BBA 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-language"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">English</h3>
-                <div class="subject-chinese">英语</div>
-                <div class="btn-container">
-                    <a href="English/english.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="English/高考-英语大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Geography -->
-        <div class="subject-card">
-            <div class="badge">文科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #5DADE2 0%, #3498DB 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-globe-asia"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Geography</h3>
-                <div class="subject-chinese">地理</div>
-                <div class="btn-container">
-                    <a href="Geography/geography.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="Geography/高考-地理大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- History -->
-        <div class="subject-card">
-            <div class="badge">文科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #A569BD 0%, #8E44AD 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-landmark"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">History</h3>
-                <div class="subject-chinese">历史</div>
-                <div class="btn-container">
-                    <a href="History/history.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="History/高考-历史大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Humanities Math -->
-        <div class="subject-card">
-            <div class="badge">文科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #48C9B0 0%, #16A085 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-calculator"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Humanities Math</h3>
-                <div class="subject-chinese">文科数学</div>
-                <div class="btn-container">
-                    <a href="HumanitiesMath/humanitiesmath.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="HumanitiesMath/高考-文科数学大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Physics -->
-        <div class="subject-card">
-            <div class="badge">理科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #EB984E 0%, #D35400 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-atom"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Physics</h3>
-                <div class="subject-chinese">物理</div>
-                <div class="btn-container">
-                    <a href="Physics/physics.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="Physics/高考-物理大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Politic -->
-        <div class="subject-card">
-            <div class="badge">文科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-landmark"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Politic</h3>
-                <div class="subject-chinese">思想政治</div>
-                <div class="btn-container">
-                    <a href="Politic/politic.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="Politic/高考-思想政治大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Science Math -->
-        <div class="subject-card">
-            <div class="badge">理科</div>
-            <div class="subject-gradient" style="background: linear-gradient(135deg, #3498DB 0%, #2C3E50 100%);">
-                <div class="subject-icon">
-                    <i class="fas fa-square-root-alt"></i>
-                </div>
-            </div>
-            <div class="subject-info">
-                <h3 class="subject-name">Science Math</h3>
-                <div class="subject-chinese">理科数学</div>
-                <div class="btn-container">
-                    <a href="ScienceMath/sciencemath.html" class="btn btn-outline">
-                        <i class="fas fa-desktop"></i> 在线查看
-                    </a>
-                    <a href="ScienceMath/高考-理科数学大纲.pdf" class="btn btn-solid" download>
-                        <i class="fas fa-download"></i> PDF下载
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
+    <footer class="app-footer">
         <div class="footer-content">
-            <h3>高考大纲集</h3>
-            <p>本系统汇集了普通高等学校招生全国统一考试所有科目的大纲文档</p>
-            <p>涵盖2023年教育部发布的各学科考试范围与要求</p>
-            <div class="copyright">
-                © 2023 普通高等学校招生全国统一考试 | 依据教育部课程方案和课程标准
+            <div class="footer-top">
+                <h3 class="footer-title">高考大纲集</h3>
+                <p class="footer-description">本系统汇集了普通高等学校招生全国统一考试所有科目的大纲文档</p>
+            </div>
+            <div class="footer-details">
+                <p>涵盖2023年教育部发布的各学科考试范围与要求</p>
+                <p>持续更新，确保内容准确性和时效性</p>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">© 2023 普通高等学校招生全国统一考试 | 依据教育部课程方案和课程标准</div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">使用说明</a>
+                    <a href="#" class="footer-link">联系我们</a>
+                    <a href="#" class="footer-link">反馈建议</a>
+                </div>
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const subjectsGrid = document.getElementById('subjectsGrid');
+            const subjectCards = document.querySelectorAll('.subject-card');
+
+            // Filter functionality
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    subjectCards.forEach(card => {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            // Add animation class for entrance
+                            setTimeout(() => {
+                                card.style.opacity = '0';
+                                card.style.transform = 'translateY(20px)';
+                                card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                                setTimeout(() => {
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                }, 50);
+                            }, 10);
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px) scale(1.02)';
+                    card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                    card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
