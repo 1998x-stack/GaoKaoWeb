@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">跳转到主要内容</a>
     <header class="hero-header">
         <div class="hero-content">
             <div class="hero-text">
@@ -38,7 +39,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="container" id="main-content">
         <div class="intro-section">
             <div class="intro-content">
                 <h2 class="section-title">各科目高考大纲中心</h2>
@@ -320,8 +321,14 @@
             const filterBtns = document.querySelectorAll('.filter-btn');
             const subjectsGrid = document.getElementById('subjectsGrid');
             const subjectCards = document.querySelectorAll('.subject-card');
+            
+            // Initialize: set all cards to visible state
+            subjectCards.forEach(card => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            });
 
-            // Filter functionality
+            // Filter functionality with smooth animations
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     // Remove active class from all buttons
@@ -331,37 +338,112 @@
                     
                     const filter = btn.getAttribute('data-filter');
                     
-                    subjectCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                            card.style.display = 'block';
-                            // Add animation class for entrance
+                    subjectCards.forEach((card, index) => {
+                        const shouldShow = filter === 'all' || card.getAttribute('data-category') === filter;
+                        
+                        if (shouldShow) {
+                            card.style.display = 'flex';
+                            // Staggered animation for filtered items
                             setTimeout(() => {
                                 card.style.opacity = '0';
                                 card.style.transform = 'translateY(20px)';
-                                card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                                card.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                                
                                 setTimeout(() => {
                                     card.style.opacity = '1';
                                     card.style.transform = 'translateY(0)';
                                 }, 50);
-                            }, 10);
+                            }, index * 50);
                         } else {
-                            card.style.display = 'none';
+                            // Fade out before hiding
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(-10px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 200);
                         }
                     });
                 });
+                
+                // Add keyboard support
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        btn.click();
+                    }
+                });
             });
 
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.subject-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-8px) scale(1.02)';
-                    card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+            // Add keyboard navigation for cards
+            subjectCards.forEach(card => {
+                card.setAttribute('tabindex', '0');
+                
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const viewBtn = card.querySelector('.view-btn');
+                        if (viewBtn) {
+                            viewBtn.click();
+                        }
+                    }
                 });
                 
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0) scale(1)';
-                    card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+                // Add focus visible style
+                card.addEventListener('focus', () => {
+                    card.style.outline = '2px solid var(--edu-primary)';
+                    card.style.outlineOffset = '2px';
+                });
+                
+                card.addEventListener('blur', () => {
+                    card.style.outline = 'none';
+                });
+            });
+            
+            // Add click tracking for analytics (optional)
+            const trackClick = (element, action) => {
+                console.log(`User clicked: ${action}`);
+                // Could be enhanced with actual analytics
+            };
+            
+            // Track button clicks
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const action = btn.classList.contains('view-btn') ? 'view-outline' : 'download-pdf';
+                    const subjectName = btn.closest('.subject-card')?.querySelector('.subject-name')?.textContent || 'unknown';
+                    trackClick(btn, `${action}-${subjectName}`);
+                });
+            });
+            
+            // Track filter usage
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    trackClick(btn, `filter-${btn.dataset.filter}`);
+                });
+            });
+            
+            // Add smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Add error handling for missing PDFs
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const href = btn.getAttribute('href');
+                    if (!href || href === '#') {
+                        e.preventDefault();
+                        alert('PDF文件正在准备中，敬请期待！');
+                    }
                 });
             });
         });
