@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "1.3-design",
+  "status": "candidate_registry_not_published",
+  "notes": "Page metadata and links only. No exam questions, official solution text, or teacher slides included. Reuse requires separate proof of rights.",
+  "resources": [
+    {
+      "id": "moe-2020-hs-curriculum-notice",
+      "kind": "curriculum_notice",
+      "title": "普通高中课程方案和学科课程标准（2017年版2020年修订）的通知",
+      "provider": "中华人民共和国教育部",
+      "sourceUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",
+      "publishedAt": "2020-06-03",
+      "issuedAt": "2020-05-11",
+      "year": 2020,
+      "provinceCodes": [],
+      "examScheme": "not_applicable",
+      "verifiedAspect": "official_page_metadata",
+      "usage": {
+        "mode": "external_link_only",
+        "rightsStatus": "not_established",
+        "grantedActions": []
+      },
+      "workflowStatus": "candidate",
+      "scopeStatus": "national_curriculum_reference",
+      "description": "官方通知索引。未完成具体课程条文与知识节点逐项对照。",
+      "topicIds": []
+    },
+    {
+      "id": "shanghai-2025-math-official-review",
+      "kind": "exam_review",
+      "title": "专家点评2025年上海高考数学试卷",
+      "provider": "上海市教育考试院",
+      "sourceUrl": "https://www.shmeea.edu.cn/page/02200/20250608/19462.html",
+      "publishedAt": "2025-06-08",
+      "issuedAt": null,
+      "year": 2025,
+      "provinceCodes": [
+        "SH"
+      ],
+      "examScheme": "shanghai_own_paper",
+      "verifiedAspect": "official_review_not_exam_original",
+      "usage": {
+        "mode": "external_link_only",
+        "rightsStatus": "not_established",
+        "grantedActions": []
+      },
+      "workflowStatus": "candidate",
+      "scopeStatus": "exam_analysis_only",
+      "description": "官方试卷评析，不是完整真题，也不构成本站获得题目转载权。",
+      "topicIds": []
+    },
+    {
+      "id": "moe-2026-exam-paper-commentary",
+      "kind": "exam_review",
+      "title": "2026年高考命题特点报道",
+      "provider": "中华人民共和国教育部政府门户网站",
+      "sourceUrl": "https://www.moe.gov.cn/jyb_xwfb/xw_zt/moe_357/2026/2026_zt08/mtbd/202606/t20260608_1439853.html",
+      "publishedAt": "2026-06-08",
+      "issuedAt": null,
+      "year": 2026,
+      "provinceCodes": [],
+      "examScheme": "cross_scheme_news_not_specific_paper",
+      "verifiedAspect": "official_news_not_exam_original",
+      "usage": {
+        "mode": "external_link_only",
+        "rightsStatus": "not_established",
+        "grantedActions": []
+      },
+      "workflowStatus": "candidate",
+      "scopeStatus": "national_exam_commentary",
+      "description": "教育部网站命题报道，不是全国高考具体试卷或官方答案。",
+      "topicIds": []
+    },
+    {
+      "id": "moe-2024-resource-audit-guideline",
+      "kind": "policy_notice",
+      "title": "国家智慧教育平台数字教育资源内容审核规范",
+      "provider": "中华人民共和国教育部",
+      "sourceUrl": "https://www.moe.gov.cn/srcsite/A16/s3342/202407/t20240703_1139248.html",
+      "publishedAt": "2024-07-03",
+      "issuedAt": "2024-06-06",
+      "year": 2024,
+      "provinceCodes": [],
+      "examScheme": "not_applicable",
+      "verifiedAspect": "official_page_metadata",
+      "usage": {
+        "mode": "external_link_only",
+        "rightsStatus": "not_established",
+        "grantedActions": []
+      },
+      "workflowStatus": "candidate",
+      "scopeStatus": "resource_review_policy",
+      "description": "用于教育资源审核要求设计，不授予原文再分发许可。",
+      "topicIds": []
+    },
+    {
+      "id": "moe-2026-teacher-development-center",
+      "kind": "teacher_development_news",
+      "title": "国家智慧教育平台教师发展中心升级",
+      "provider": "中华人民共和国教育部政府门户网站",
+      "sourceUrl": "https://www.moe.gov.cn/jyb_xwfb/s5147/202610/t20261014_1454119.html",
+      "publishedAt": "2026-10-14",
+      "issuedAt": null,
+      "year": 2026,
+      "provinceCodes": [],
+      "examScheme": "not_applicable",
+      "verifiedAspect": "official_news_page",
+      "usage": {
+        "mode": "external_link_only",
+        "rightsStatus": "not_established",
+        "grantedActions": []
+      },
+      "workflowStatus": "candidate",
+      "scopeStatus": "teacher_pedagogy_reference",
+      "description": "官方报道和教师研修场景参考，不是具有再发布许可的教案素材。",
+      "topicIds": []
+    }
+  ]
+}

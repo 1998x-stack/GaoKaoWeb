@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.3-design",
+  "status": "proposed_not_official",
+  "subject": "science-math",
+  "classification": {
+    "questionFormat": [
+      "single_choice",
+      "multi_choice",
+      "fill_blank",
+      "short_answer",
+      "proof",
+      "modeling"
+    ],
+    "cognitiveOperation": [
+      "recognition",
+      "understanding",
+      "application",
+      "synthesis",
+      "exploration"
+    ],
+    "mathCoreCompetency": [
+      "mathematical_abstraction",
+      "logical_reasoning",
+      "mathematical_modeling",
+      "intuitive_imagination",
+      "mathematical_operation",
+      "data_analysis"
+    ],
+    "solutionMethod": [
+      "function_monotonicity",
+      "classification_by_cases",
+      "geometric_algebra",
+      "construction",
+      "substitution",
+      "inequality_transformation"
+    ],
+    "estimatedDifficulty": [
+      "unknown",
+      "teacher_estimate_basic",
+      "teacher_estimate_intermediate",
+      "teacher_estimate_advanced",
+      "empirical_measured"
+    ],
+    "commonError": [
+      "conceptual_gap",
+      "condition_missing",
+      "sign_error",
+      "algebra_error",
+      "domain_error",
+      "proof_gap"
+    ],
+    "provenanceKind": [
+      "original_authored",
+      "licensed_reuse",
+      "official_external_link",
+      "simulated",
+      "unknown"
+    ]
+  },
+  "pilotTracks": [
+    {
+      "slug": "derivatives",
+      "title": "导数与函数的性质",
+      "topicIds": [],
+      "mappingStatus": "teacher_review_required",
+      "goals": [
+        "导数符号与单调性",
+        "极值与参数讨论",
+        "函数和不等式"
+      ]
+    },
+    {
+      "slug": "conics",
+      "title": "圆锥曲线与解析几何",
+      "topicIds": [],
+      "mappingStatus": "teacher_review_required",
+      "goals": [
+        "直线与曲线的位置关系",
+        "韦达定理与参数化",
+        "几何量与代数变换"
+      ]
+    },
+    {
+      "slug": "trigonometry",
+      "title": "三角函数与解三角形",
+      "topicIds": [],
+      "mappingStatus": "teacher_review_required",
+      "goals": [
+        "恒等变换",
+        "图像与性质",
+        "实际情境建模"
+      ]
+    }
+  ]
+}
