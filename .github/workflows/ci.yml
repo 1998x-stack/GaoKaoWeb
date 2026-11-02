@@ -1,7 +1,7 @@
 name: Verify GaoKao Atlas
 on:
   pull_request:
-    branches: [main]
+    branches: [main, feat/knowledge-hub-rebuild]
   workflow_dispatch:
 permissions:
   contents: read
