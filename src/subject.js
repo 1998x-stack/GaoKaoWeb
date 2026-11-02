@@ -1,3 +1,4 @@
+import { readState as loadStudyState, updateState } from './study-store.mjs';
 (() => {
   const page = document.querySelector('[data-subject-page]');
   if (!page) return;
@@ -23,14 +24,8 @@
   let nodes = [];
   let category = 'all';
   let query = '';
-  const progressKey = 'gaokao:reviewed:v1:' + slug;
-  const readState = () => {
-    try {
-      const values = JSON.parse(localStorage.getItem(progressKey) || '[]');
-      return new Set(Array.isArray(values) ? values : []);
-    } catch { return new Set(); }
-  };
-  const reviewed = readState();
+  const storage = (()=>{try{return window.localStorage;}catch{return null;}})();
+  const reviewed = new Set(Object.keys(loadStudyState(storage).reviewed));
   function element(tag, className = '', text = '') {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -98,6 +93,9 @@
     node.children.forEach(child => body.appendChild(renderNested(child, depth + 1)));
     renderEvidence(node, body);
     if (node.footer) body.appendChild(element('p', 'node-footer', node.footer));
+    const deepLink=element('a','topic-deep-link','打开知识点独立页面 ↗');
+    deepLink.href='../../topics/'+encodeURIComponent(slug)+'/'+encodeURIComponent(node.id)+'/';
+    body.prepend(deepLink);
     details.appendChild(body);
     return details;
   }
@@ -107,11 +105,11 @@
     progressFill.style.width = (nodes.length ? Math.round(100 * completed / nodes.length) : 0) + '%';
   }
   function toggleRead(id, button) {
-    if (reviewed.has(id)) reviewed.delete(id);
-    else reviewed.add(id);
-    try { localStorage.setItem(progressKey, JSON.stringify([...reviewed])); } catch {}
-    button.textContent = reviewed.has(id) ? '✓ 已阅读' : '标记已阅读';
-    button.setAttribute('aria-pressed', String(reviewed.has(id)));
+    const next=updateState(storage,'reviewed',id);
+    reviewed.clear();
+    Object.keys(next.reviewed).forEach(item=>reviewed.add(item));
+    button.textContent=reviewed.has(id)?'✓ 已阅读':'标记已阅读';
+    button.setAttribute('aria-pressed',String(reviewed.has(id)));
     drawProgress();
   }
   function buildCard(node, index) {
@@ -129,6 +127,9 @@
     mark.addEventListener('click', () => toggleRead(node.id, mark));
     header.appendChild(mark);
     section.appendChild(header);
+    const detailLink=element('a','topic-deep-link topic-head-link','进入本知识主题详情 ↗');
+    detailLink.href='../../topics/'+encodeURIComponent(slug)+'/'+encodeURIComponent(node.id)+'/';
+    section.appendChild(detailLink);
     const body = element('div', 'topic-body');
     renderContent(node, body);
     node.children.forEach(child => body.appendChild(renderNested(child)));

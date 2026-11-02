@@ -52,3 +52,22 @@ Add Chinese segmentation and retrieval benchmarks; source-grounded RAG only afte
 - Legacy PDF assets are copied from their sources.
 - PR CI successfully builds and uploads website artifact.
 - Real browser keyboard/mobile E2E and PDF-official-origin checks remain outstanding independent gates.
+
+
+## V1.2 — Personal learning experience
+
+- Exactly one static route for each original knowledge node:
+  /topics/{subjectId}/{nodeId}/.
+- src/knowledge.mjs converts the nested tree to stable indexed nodes and typed relations.
+  parent/child/sibling links are direct legacy-tree facts; title_similarity is a
+  machine-generated suggestion, not a pedagogical prerequisite or verified knowledge claim.
+- src/learning-pages.mjs produces self-contained content pages, provenance notices,
+  related concepts, and the learning dashboard.
+- Browser-only learning state is versioned at gaokao:study:v2. Old V1.0 top-level
+  reviewed marks migrate one-to-one, never filling descendant state automatically.
+- No user data leaves the browser; neither login nor database is required.
+- src/search-core.mjs provides Intl.Segmenter Chinese tokenization with
+  overlapping Han bigrams/trigrams and field-weighted BM25 scoring. It is a
+  deterministic local-search ranking baseline, not an LLM semantic engine.
+- Acceptance gates ensure 269 detail routes, 269 search targets, no broken
+  links, and no dangling related-topic edges.

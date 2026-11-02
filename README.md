@@ -71,8 +71,15 @@ dist/                       # 自动生成，禁止手工修改
 
 构建需要 poppler-utils (pdfinfo/pdftotext)。更多信息见 docs/SOURCE_GOVERNANCE.md。
 
-## Vercel / portable builds
 
-`vercel.json` sets `framework: null`, `buildCommand: npm run build` and `outputDirectory: dist`. The normal build needs only Node.js 20+ and validates every pinned PDF SHA256; it does **not** require `pdfinfo`/`pdftotext` in the deployment container.
+## V1.2 独立知识页与本地学习中心
 
-The evidence location cache in `content/pdf-evidence-locations.json` was derived from GitHub Actions' Poppler-checked source PDFs and stays `unreviewed`. The separate `npm run audit:pdf` command (in CI, with `poppler-utils`) re-extracts the source PDF pages and rejects any cache drift. Never regenerate or promote page evidence from unverified official copies without independent review.
+- /topics/{subjectId}/{nodeId}/ 为全部知识节点生成独立可分享的静态 URL。
+- /learning/ 展示 10 学科的学习标记覆盖率、收藏夹、近期阅读、本地 JSON 导出和主动确认后清空。
+- 中文检索使用浏览器 Intl.Segmenter + 汉字二元/三元切分 + 字段加权 BM25，支持标题优先和学科筛选。
+- 目录父子/相邻主题是有源结构关系；标题相似仅供探索，不代表官方教学先修关系。
+- 阅读状态仅存在本地浏览器。V1.0 已标记的一级主题自动迁移，不自动标记下级主题完成。
+
+## Vercel static deployment compatibility
+
+The normal Node.js build now uses pinned, independently audited page-location evidence and does not call pdfinfo/pdftotext. Both PDF checksums and the full knowledge graph remain validated. CI runs npm run audit:pdf with Poppler before building. Vercel serves only dist via vercel.json. See docs/VERCEL_DEPLOYMENT.md.
