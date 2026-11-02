@@ -150,3 +150,58 @@ export function makeProvenanceIndex(registry, auditByDoc) {
     otherOfficialSources:registry.otherOfficialSources
   };
 }
+
+
+/**
+ * Reproducible PDF evidence cache for static builds without OS PDF tools.
+ * Ordinals are depth-first indices; every match is machine-generated/unreviewed.
+ */
+export function applyCachedProvenance(nodes,subjectId,doc,cache) {
+  if(cache?.schemaVersion!==1 || !Object.prototype.hasOwnProperty.call(cache.subjects,subjectId))
+    throw new Error('PDF cache missing subject '+subjectId);
+  const entries=new Map();
+  for(const [ordinal,rows] of cache.subjects[subjectId]) {
+    if(!Number.isInteger(ordinal)||entries.has(ordinal)||!Array.isArray(rows))
+      throw new Error('Invalid cache ordinal '+subjectId+':'+ordinal);
+    entries.set(ordinal,rows);
+  }
+  let ordinal=0,matchedNodes=0,candidatePages=0;
+  function visit(node){
+    const idx=ordinal++;
+    const rows=entries.get(idx)||[];
+    const phrases=[node.title,...node.items,...node.content.flatMap(c=>[c.title,...c.items])];
+    const pageCandidates=rows.map(([page,phraseOrdinal,exactMatches])=>{
+      const phrase=phrases[phraseOrdinal];
+      if(!Number.isInteger(page)||page<1||page>doc.pages||!Number.isInteger(phraseOrdinal)||
+         !Number.isInteger(exactMatches)||exactMatches<1||typeof phrase!=='string')
+        throw new Error('Invalid PDF page reference '+subjectId+':'+idx);
+      const normalized=normalizeText(phrase);
+      if(normalized.length<8||normalized.length>160)
+        throw new Error('Invalid PDF anchor '+subjectId+':'+idx);
+      const anchor=phrase.slice(0,60);
+      return {page,anchor,anchorNormalized:normalizeText(anchor),
+        exactMatches,longestAnchorLength:normalized.length,
+        matchMethod:'local_pdf_exact_normalized_text',reviewStatus:'unreviewed'};
+    });
+    if(pageCandidates.length)matchedNodes++;
+    candidatePages+=pageCandidates.length;
+    node.provenance={
+      localDocumentId:doc.id,officialCatalogContextId:doc.officialCatalogContextId,
+      compilationStatus:'legacy_compilation_not_officially_verified',
+      locationStatus:pageCandidates.length?'candidate_page_match_unreviewed':'no_page_match',
+      pageCandidates
+    };
+    node.children.forEach(visit);
+  }
+  nodes.forEach(visit);
+  for(const idx of entries.keys()) if(idx>=ordinal)throw new Error('Unmatched PDF evidence node ordinal '+subjectId+':'+idx);
+  return {nodeCount:ordinal,matchedNodes,candidatePages};
+}
+
+export function inspectPinnedPdfWithoutPoppler(root,doc) {
+  const file=path.join(root,doc.file);
+  if(!fs.existsSync(file)||sha256File(file)!==doc.sha256)
+    throw new Error('PDF fingerprint mismatch: '+doc.id);
+  // pdfinfo checks are performed separately in CI audit, not in Vercel builds.
+  return {pageCount:doc.pages,extractablePages:doc.pages};
+}

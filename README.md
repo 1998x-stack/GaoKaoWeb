@@ -70,3 +70,9 @@ dist/                       # 自动生成，禁止手工修改
 每个知识节点绑定来源文件 ID；部分节点显示通过本地 PDF 文本精确匹配找到的候选页码和 PDF 跳转链接。所有页码命中都只是机器建议、未经人工复核，不能证明仓库 PDF 与官方原件一致。
 
 构建需要 poppler-utils (pdfinfo/pdftotext)。更多信息见 docs/SOURCE_GOVERNANCE.md。
+
+## Vercel / portable builds
+
+`vercel.json` sets `framework: null`, `buildCommand: npm run build` and `outputDirectory: dist`. The normal build needs only Node.js 20+ and validates every pinned PDF SHA256; it does **not** require `pdfinfo`/`pdftotext` in the deployment container.
+
+The evidence location cache in `content/pdf-evidence-locations.json` was derived from GitHub Actions' Poppler-checked source PDFs and stays `unreviewed`. The separate `npm run audit:pdf` command (in CI, with `poppler-utils`) re-extracts the source PDF pages and rejects any cache drift. Never regenerate or promote page evidence from unverified official copies without independent review.
