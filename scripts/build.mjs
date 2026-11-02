@@ -84,7 +84,8 @@ write('about/index.html', aboutPage(catalog.sourceNotice));
 write('404.html', homePage(output.subjects, catalog.sourceNotice, output.nodes));
 write('data/manifest.json', JSON.stringify({
   schemaVersion: '1.1', status: 'historical_unverified', subjects: output.subjects.length,
-  nodes: output.nodes, searchEntries: allSearchEntries.length, documents: output.documents
+  nodes: output.nodes, searchEntries: allSearchEntries.length, documents: output.documents,
+  nodesWithPageCandidates: output.nodesWithPageCandidates, pageCandidates: output.pageCandidates
 }, null, 2));
 output.searchEntries = allSearchEntries.length;
 console.log('Built GaoKaoWeb:', JSON.stringify(output));
