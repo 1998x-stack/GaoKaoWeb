@@ -71,6 +71,8 @@ export function flattenSearch(subject, nodes) {
       category: node.category,
       depth,
       excerpt: details.slice(0, 150),
+      locationStatus: node.provenance?.locationStatus || 'no_page_match',
+      candidatePage: node.provenance?.pageCandidates?.[0]?.page || null,
       searchText: (node.title + ' ' + details).toLocaleLowerCase('zh-CN')
     });
   });

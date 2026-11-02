@@ -62,3 +62,17 @@ dist/                       # 自动生成，禁止手工修改
 - 原始资产：旧版 data.js 和 PDF 保留，支持无损迁移和回归测试。
 
 代码许可和原始 PDF 许可应分别确定。PDF 与外部文件不能因代码许可证而推定可自由再分发。
+
+## V1.1 来源核验（历史资料）
+
+新增 /sources/ 来源核验中心、11 份本地 PDF 的页数与 SHA-256 登记、11 个中国教育考试网 2019 年官方目录，以及教育部 2020 年课程标准通知记录。
+
+每个知识节点绑定来源文件 ID；部分节点显示通过本地 PDF 文本精确匹配找到的候选页码和 PDF 跳转链接。所有页码命中都只是机器建议、未经人工复核，不能证明仓库 PDF 与官方原件一致。
+
+构建需要 poppler-utils (pdfinfo/pdftotext)。更多信息见 docs/SOURCE_GOVERNANCE.md。
+
+## Vercel / portable builds
+
+`vercel.json` sets `framework: null`, `buildCommand: npm run build` and `outputDirectory: dist`. The normal build needs only Node.js 20+ and validates every pinned PDF SHA256; it does **not** require `pdfinfo`/`pdftotext` in the deployment container.
+
+The evidence location cache in `content/pdf-evidence-locations.json` was derived from GitHub Actions' Poppler-checked source PDFs and stays `unreviewed`. The separate `npm run audit:pdf` command (in CI, with `poppler-utils`) re-extracts the source PDF pages and rejects any cache drift. Never regenerate or promote page evidence from unverified official copies without independent review.

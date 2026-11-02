@@ -1,0 +1,423 @@
+{
+  "schemaVersion": "1.1",
+  "reviewedCatalogAt": "2026-11-02",
+  "policy": {
+    "disclosure": "官方网页的发布日期不等于仓库本地PDF的发布日期；本地文件与2019年官网原件尚未逐字或二进制比较。",
+    "historicalScope": "2019 年全国考试大纲是历史参考资料，不能直接作为2026年或特定省份的考试要求。",
+    "candidateMeaning": "PDF文本匹配页码只是本地文件内的程序匹配建议，不代表官方原件核验或人工审定。",
+    "currentBasis": "现行课程标准需单独登记适用版次、课程与地区，不得直接沿用旧考纲结论。"
+  },
+  "officialDocuments": [
+    {
+      "id": "neea-2019-biology",
+      "title": "2019年普通高等学校招生全国统一考试大纲（生物）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5828-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-chemistry",
+      "title": "2019年普通高等学校招生全国统一考试大纲（化学）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5836-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-chinese",
+      "title": "2019年普通高等学校招生全国统一考试大纲（语文）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5987-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-english",
+      "title": "2019年普通高等学校招生全国统一考试大纲（英语）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5951-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-geography",
+      "title": "2019年普通高等学校招生全国统一考试大纲（地理）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5851-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-history",
+      "title": "2019年普通高等学校招生全国统一考试大纲（历史）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5864-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-humanities-math",
+      "title": "2019年普通高等学校招生全国统一考试大纲（文科数学）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5977-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-overview",
+      "title": "2019年普通高等学校招生全国统一考试大纲（总纲）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5989-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-physics",
+      "title": "2019年普通高等学校招生全国统一考试大纲（物理）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5844-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-politics",
+      "title": "2019年普通高等学校招生全国统一考试大纲（思想政治）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5878-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    },
+    {
+      "id": "neea-2019-science-math",
+      "title": "2019年普通高等学校招生全国统一考试大纲（理科数学）",
+      "issuer": "教育部考试中心",
+      "publisherSite": "中国教育考试网",
+      "publishedAt": "2019-01-31",
+      "officialUrl": "https://gaokao.neea.edu.cn/xhtml1/report/19012/5965-1.htm",
+      "documentType": "national_exam_outline",
+      "scope": {
+        "geography": "CN",
+        "examYear": 2019,
+        "applicability": "historical_national_reference",
+        "regionalAdaptations": "not_assessed"
+      },
+      "verification": {
+        "catalogEntry": "verified_on_official_website",
+        "pdfBinary": "not_compared"
+      }
+    }
+  ],
+  "localDocuments": [
+    {
+      "id": "local-biology",
+      "title": "仓库归档：生物",
+      "subjectId": "biology",
+      "file": "documents/biology.pdf",
+      "pages": 5,
+      "sha256": "c54ed233b3fb68609b750aba70a84ec1142d6854acb57f22fc5cbe8965b8f12d",
+      "pdfCreationMetadata": "2019-01-24T07:15:32Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-biology",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-chemistry",
+      "title": "仓库归档：化学",
+      "subjectId": "chemistry",
+      "file": "documents/chemistry.pdf",
+      "pages": 7,
+      "sha256": "f79e68a4a5aa32ba7439f507e2babad2569fb068316ec3588c6525212ea70657",
+      "pdfCreationMetadata": "2019-01-24T07:10:45Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-chemistry",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-chinese",
+      "title": "仓库归档：语文",
+      "subjectId": "chinese",
+      "file": "documents/chinese.pdf",
+      "pages": 5,
+      "sha256": "f77c209cf791424a869ca93e34edb53c2ba7fb27e6eadaf66c60984a6b09d408",
+      "pdfCreationMetadata": "2017-12-15T01:45:15Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-chinese",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-english",
+      "title": "仓库归档：英语",
+      "subjectId": "english",
+      "file": "documents/english.pdf",
+      "pages": 71,
+      "sha256": "36c4029b37a8886f538d237eb46a252f43e28844cc9f01b04fdc86ceb0ac7c1d",
+      "pdfCreationMetadata": "2019-01-24T07:20:13Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-english",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-geography",
+      "title": "仓库归档：地理",
+      "subjectId": "geography",
+      "file": "documents/geography.pdf",
+      "pages": 5,
+      "sha256": "bcdec4a00003f76155d3593f9f3d46e2f981cee280235e4b448aaff9a1f4e6c4",
+      "pdfCreationMetadata": "2019-01-24T07:11:33Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-geography",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-history",
+      "title": "仓库归档：历史",
+      "subjectId": "history",
+      "file": "documents/history.pdf",
+      "pages": 7,
+      "sha256": "f30fb2bcfa55f559f3333eb6da8f9d3c2a27c0ddeb31979da9283899b81d4d06",
+      "pdfCreationMetadata": "2019-01-24T07:14:52Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-history",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-humanities-math",
+      "title": "仓库归档：文科数学（历史）",
+      "subjectId": "humanities-math",
+      "file": "documents/humanities-math.pdf",
+      "pages": 11,
+      "sha256": "dfc2dc13f1afb136a4c568a7bbee50b9dd6469dc3f8862a05418e8a6eb9c5b0f",
+      "pdfCreationMetadata": "2019-01-24T07:17:55Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-humanities-math",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-overview",
+      "title": "仓库归档：高考总纲",
+      "subjectId": null,
+      "file": "documents/overview.pdf",
+      "pages": 1,
+      "sha256": "6de158456134a21e5a49f95ad23e59bd7911a1c136d41d33f880665e0ee9d6a1",
+      "pdfCreationMetadata": "2016-10-13T13:24:13Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-overview",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-physics",
+      "title": "仓库归档：物理",
+      "subjectId": "physics",
+      "file": "documents/physics.pdf",
+      "pages": 6,
+      "sha256": "09ffc23b589b48c4d525508213558700929d456c4bcdf15880cf713459f692df",
+      "pdfCreationMetadata": "2019-01-24T07:19:29Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-physics",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-politics",
+      "title": "仓库归档：思想政治",
+      "subjectId": "politics",
+      "file": "documents/politics.pdf",
+      "pages": 13,
+      "sha256": "42b8c7277707f6e3eee0c677fc53c4342fff8245daeeb427876c1287df3a4909",
+      "pdfCreationMetadata": "2019-01-24T07:17:19Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-politics",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    },
+    {
+      "id": "local-science-math",
+      "title": "仓库归档：理科数学（历史）",
+      "subjectId": "science-math",
+      "file": "documents/science-math.pdf",
+      "pages": 12,
+      "sha256": "cc80215da5a3cfa9db0a48f1ad46328b6d8b9e3ddc03978974e5993909063408",
+      "pdfCreationMetadata": "2019-01-24T07:13:23Z",
+      "publishedAt": null,
+      "issuer": null,
+      "year": null,
+      "regions": null,
+      "originVerification": "unverified_local_copy",
+      "officialCatalogContextId": "neea-2019-science-math",
+      "officialComparison": "not_performed",
+      "pageEvidencePolicy": "exact_text_candidate_requires_review"
+    }
+  ],
+  "otherOfficialSources": [
+    {
+      "id": "moe-2020-curriculum-notice",
+      "title": "关于印发普通高中课程方案和语文等学科课程标准（2017年版2020年修订）的通知",
+      "issuer": "中华人民共和国教育部",
+      "documentNo": "教材〔2020〕3号",
+      "publishedAt": "2020-05-11",
+      "webPublishedAt": "2020-06-03",
+      "officialUrl": "https://www.moe.gov.cn/srcsite/A26/s8001/202006/t20200603_462199.html",
+      "relationship": "curriculum_policy_context_only",
+      "nodeMappings": "none_verified"
+    }
+  ]
+}

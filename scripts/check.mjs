@@ -9,6 +9,10 @@ if (!fs.existsSync(path.join(dist, 'index.html'))) throw new Error('Run npm run 
 const manifest = JSON.parse(fs.readFileSync(path.join(dist, 'data/manifest.json'), 'utf8'));
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'content/catalog.json'), 'utf8'));
 const issues = [];
+const sources = JSON.parse(fs.readFileSync(path.join(dist, 'data/sources.json'), 'utf8'));
+const registry = JSON.parse(fs.readFileSync(path.join(root, 'content/sources.json'), 'utf8'));
+if (sources.schemaVersion !== '1.1') issues.push('Sources schema version mismatch');
+if (sources.localDocuments.length !== 11 || sources.officialDocuments.length !== 11) issues.push('Unexpected document registry coverage');
 let htmlCount = 0;
 function checkDir(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -47,8 +51,38 @@ for (const subject of catalog.subjects) {
     issues.push('PDF source bytes changed: ' + subject.id);
   }
 }
+let covered = 0;
+let pageCandidates = 0;
+for (const subject of catalog.subjects) {
+  const data = JSON.parse(fs.readFileSync(path.join(dist,'data',subject.id+'.json'), 'utf8'));
+  const document = sources.localDocuments.find(x=>x.id === data.localDocumentId);
+  if (!document) {issues.push('Unregistered document for '+subject.id);continue;}
+  if (document.originVerification !== 'unverified_local_copy') issues.push('Unauthorized promotion: '+subject.id);
+  const pdf = path.join(dist,document.file);
+  if (digest(pdf) !== document.sha256) issues.push('Registry hash mismatch: '+subject.id);
+  const visit = node => {
+    covered++;
+    const evidence = node.provenance;
+    if (!evidence || evidence.localDocumentId !== document.id || evidence.compilationStatus !== 'legacy_compilation_not_officially_verified') {
+      issues.push('Missing/untrusted node provenance: '+node.id);
+    } else {
+      for (const candidate of evidence.pageCandidates) {
+        pageCandidates++;
+        if (candidate.page < 1 || candidate.page > document.pages ||
+            candidate.reviewStatus !== 'unreviewed' ||
+            candidate.matchMethod !== 'local_pdf_exact_normalized_text') issues.push('Invalid page candidate: '+node.id);
+      }
+    }
+    node.children.forEach(visit);
+  };
+  data.nodes.forEach(visit);
+}
+if (covered !== manifest.nodes) issues.push('Provenance coverage mismatch: '+covered);
+if (pageCandidates !== manifest.pageCandidates) issues.push('Page candidate count mismatch');
+const ov = sources.localDocuments.find(x=>x.id==='local-overview');
+if (!ov || digest(path.join(dist,ov.file))!==ov.sha256) issues.push('Overview checksum mismatch');
 if (issues.length) {
   console.error(issues.join('\n'));
   process.exit(1);
 }
-console.log('Validation passed:', htmlCount, 'HTML files,', manifest.nodes, 'nodes,', manifest.searchEntries, 'search entries');
+console.log('Validation passed:', htmlCount, 'HTML files,', manifest.nodes, 'nodes,', manifest.searchEntries, 'search entries,', covered, 'provenance records,', pageCandidates, 'page suggestions');

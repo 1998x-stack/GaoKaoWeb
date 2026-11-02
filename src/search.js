@@ -41,6 +41,7 @@
       const top = element('div','result-top');
       top.appendChild(element('span','result-subject',item.subjectName));
       top.appendChild(element('span','result-status','历史资料'));
+      top.appendChild(element('span','result-status',item.locationStatus === 'candidate_page_match_unreviewed' ? '本地页码待复核' : 'PDF 页码未定位'));
       anchor.appendChild(top);
       anchor.appendChild(element('h2','',item.title));
       anchor.appendChild(element('p','',item.excerpt || '打开相关主题查看详细内容'));
