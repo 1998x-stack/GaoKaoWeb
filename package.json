@@ -7,9 +7,10 @@
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check.mjs",
-    "verify": "npm run lint && npm run test && npm run build && npm run check",
-    "lint": "node --check src/site.js && node --check src/subject.js && node --check src/search.js && node --check src/model.mjs && node --check src/templates.mjs && node --check scripts/build.mjs && node --check scripts/check.mjs && node --check src/provenance.mjs && node --check src/knowledge.mjs && node --check src/search-core.mjs && node --check src/study-store.mjs && node --check src/learning-pages.mjs && node --check src/detail.js && node --check src/learning.js",
-    "audit:pdf": "node scripts/audit-pdf-evidence.mjs"
+    "verify": "npm run lint && npm run test && npm run build && npm run check && npm run check:v13",
+    "lint": "node --check src/site.js && node --check src/subject.js && node --check src/search.js && node --check src/model.mjs && node --check src/templates.mjs && node --check scripts/build.mjs && node --check scripts/check.mjs && node --check src/provenance.mjs && node --check src/knowledge.mjs && node --check src/search-core.mjs && node --check src/study-store.mjs && node --check src/learning-pages.mjs && node --check src/detail.js && node --check src/learning.js && node --check src/resources/rights-policy.mjs && node --check scripts/check-v13.mjs",
+    "audit:pdf": "node scripts/audit-pdf-evidence.mjs",
+    "check:v13": "node scripts/check-v13.mjs"
   },
   "engines": {
     "node": ">=20"

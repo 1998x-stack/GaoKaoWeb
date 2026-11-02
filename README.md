@@ -83,3 +83,16 @@ dist/                       # 自动生成，禁止手工修改
 ## Vercel static deployment compatibility
 
 The normal Node.js build now uses pinned, independently audited page-location evidence and does not call pdfinfo/pdftotext. Both PDF checksums and the full knowledge graph remain validated. CI runs npm run audit:pdf with Poppler before building. Vercel serves only dist via vercel.json. See docs/VERCEL_DEPLOYMENT.md.
+
+## V1.3 教学资源体系：深度调研与设计阶段
+
+当前仅提交产品架构、证据来源候选、题型分类草案、来源与版权发布审核代码、AI 可引用证据门槛；**未公开第三方真题正文，未上线教师工作台或 AI 问答。**
+
+- [深度调研与合法来源核验](docs/V1.3_RESEARCH_RIGHTS.md)
+- [产品 / 数据模型 / 前后端 / 教师与学生工作流 / 阶段验收](docs/V1.3_SYSTEM_ARCHITECTURE.md)
+- [AI 问答证据约束和评测方案](docs/V1.3_AI_EVIDENCE_GATES.md)
+- [来源候选登记](content/v1.3/source-candidates.json)
+- [资源契约 JSON Schema](schemas/v1.3/resource.schema.json)
+- [数学分类和三个专题试点](content/v1.3/mathematics-taxonomy.json)
+
+运行 `npm run check:v13` 验证来源候选无题干全文、没有把官方评析标为原卷且未经授权不准入正文；`npm run verify` 包含 V1.3 合规门槛单测。

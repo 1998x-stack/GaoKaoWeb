@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/1998x-stack/GaoKaoWeb/schemas/v1.3/resource.schema.json",
+  "title": "GaoKaoWeb V1.3 Resource Metadata",
+  "description": "Design-stage resource contract. External references have zero hosted-content rights by default.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "kind",
+    "title",
+    "provider",
+    "sourceUrl",
+    "publishedAt",
+    "issuedAt",
+    "year",
+    "provinceCodes",
+    "examScheme",
+    "verifiedAspect",
+    "usage",
+    "workflowStatus",
+    "scopeStatus",
+    "description",
+    "topicIds"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{4,120}$"
+    },
+    "kind": {
+      "enum": [
+        "official_exam_paper",
+        "exam_review",
+        "teacher_development_news",
+        "curriculum_notice",
+        "policy_notice",
+        "licensed_question",
+        "authored_question",
+        "lesson_plan",
+        "learning_path"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 220
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 2
+    },
+    "sourceUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "publishedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "issuedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "year": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 2000,
+      "maximum": 2100
+    },
+    "provinceCodes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      },
+      "uniqueItems": true
+    },
+    "examScheme": {
+      "type": "string",
+      "minLength": 3
+    },
+    "verifiedAspect": {
+      "type": "string",
+      "minLength": 4
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "rightsStatus",
+        "grantedActions"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "external_link_only",
+            "hosted"
+          ]
+        },
+        "rightsStatus": {
+          "enum": [
+            "not_established",
+            "licensed",
+            "author_owned",
+            "permission_in_writing",
+            "revoked"
+          ]
+        },
+        "rightsEvidenceUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "rightsHolder": {
+          "type": "string"
+        },
+        "licenseCode": {
+          "type": "string"
+        },
+        "reviewedBy": {
+          "type": "string"
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "grantedActions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "display_full",
+              "host_file",
+              "distribute",
+              "adapt",
+              "create_embeddings",
+              "send_to_external_llm"
+            ]
+          }
+        }
+      }
+    },
+    "workflowStatus": {
+      "enum": [
+        "candidate",
+        "metadata_reviewed",
+        "rights_reviewed",
+        "pedagogy_reviewed",
+        "published",
+        "withdrawn"
+      ]
+    },
+    "scopeStatus": {
+      "type": "string",
+      "minLength": 4
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 380
+    },
+    "topicIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_-]+$"
+      },
+      "uniqueItems": true
+    },
+    "content": {
+      "type": "object",
+      "description": "Only permitted for reviewed hosted content, plus rights grant"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "usage": {
+            "properties": {
+              "mode": {
+                "const": "hosted"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "usage": {
+            "properties": {
+              "grantedActions": {
+                "contains": {
+                  "const": "display_full"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "content"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "official_exam_paper"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "year"
+        ],
+        "properties": {
+          "year": {
+            "type": "integer"
+          },
+          "examScheme": {
+            "not": {
+              "const": "not_applicable"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "workflowStatus": {
+            "const": "published"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verifiedAspect": {
+            "not": {
+              "const": "unverified"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
