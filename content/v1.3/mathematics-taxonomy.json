@@ -91,5 +91,15 @@
         "实际情境建模"
       ]
     }
-  ]
+  ],
+  "metadata": {
+    "version": "2026-11-02",
+    "classificationStatus": "draft_requires_teacher_review",
+    "historicalSubjectReference": "science-math",
+    "notCurrentNationalCurriculum": true,
+    "publishedItems": 0,
+    "teacherReviewedTopicMappings": 0,
+    "notes": "旧理科数学仅作历史知识节点引用；当前课标和地区适用性需要逐项核验，不能自动赋予现行资格。",
+    "documentation": "docs/V1.3_QUESTION_TAXONOMY.md"
+  }
 }

@@ -1,73 +1,69 @@
-# Architecture and content governance
+# GaoKaoWeb 系统架构（已实现与规划严格分离）
 
-## Goals
+状态基线：2026-11-02。详细 V1.3 业务设计在 [V1.3_SYSTEM_ARCHITECTURE.md](V1.3_SYSTEM_ARCHITECTURE.md)，这里记录**当前仓库可复现的代码架构**。
 
-1. Preserve existing subject data without losing nested content.
-2. Build a readable educational UI rather than another card-only layout.
-3. Keep historical syllabi separate from current exam guidance.
-4. Make every generated page link and PDF path auditable.
-5. Publish only generated site assets, not development skill files.
+## 1. 当前结构与数据流
 
-## Data flow
+~~~text
+10 份旧学科 data.js                  content/catalog.json
+           │                                   │
+           └───────── src/model.mjs ───────────┘
+                         │
+              递归知识树（269 节点）
+                         │
+       ┌─────────────────┼─────────────────────┐
+       │                 │                     │
+  src/knowledge.mjs  src/search-core.mjs  src/provenance.mjs
+  类型化目录关系      中文切词 + BM25      来源、哈希、页码缓存
+       │                 │                     │
+       └─────────────────┼─────────────────────┘
+                         │
+                   scripts/build.mjs
+                         │
+               dist/ (静态 HTML + JSON + PDF)
+                         │
+            GitHub Pages / Vercel (dist)
+~~~
 
-Legacy subject data.js → src/model.mjs → normalized tree → JSON per subject + flattened search index → HTML templates → dist.
+正常构建的 PDF 页码证据来自 content/pdf-evidence-locations.json；构建时**仍校验全部 PDF SHA-256**，但不运行 Poppler。CI 独立运行 npm run audit:pdf，从原文件逐页重新计算匹配并与缓存比较。此证据仅属于本地文件，不可升格为官方原件页码。
 
-The model walks children recursively, assigning deterministic node IDs using subject, source section and child ordinal. All items and nested content sections are retained. Client rendering recursively handles every child level and creates text nodes rather than injecting unchecked HTML.
+## 2. 当前公开路由
 
-The catalog describes subjects and archived PDFs, but does not invent publication dates or legal applicability. All PDFs and topics are labeled historical_unverified until separately audited.
+| 路由 | 实现状态 | 数据源 |
+|---|---|---|
+| / | 已实现：学科导航 | catalog |
+| /subjects/:slug/ | 已实现：层级知识树 | 各学科 data.json |
+| /topics/:subjectId/:nodeId/ | 已实现：独立知识页 | 知识树、证据、关联图 |
+| /search/ | 已实现：中文搜索 | search-index.json |
+| /learning/ | 已实现：收藏和阅读进度 | 本地 localStorage |
+| /archive/ | 已实现：历史资料 | 本地 PDF |
+| /sources/ | 已实现：来源状态 | sources.json |
+| /exams/, /practice/, /teach/, /paths/, /ask/ | **未实现**：V1.3 后续路由 | 禁止提前宣称 |
 
-## Pages
+V1.2 节点 ID 是历史结构序列 ID；在下一次迁移时应建立 immutableTopicId 与旧 ID 的 alias 映射，否则目录重排可能改变 URL。**尚未实施该迁移**。
 
-- / : subject discovery homepage.
-- /subjects/:id/ : knowledge outline, filters, expandable details, read markers.
-- /search/ : static search across subjects, no backend.
-- /archive/ : historical PDF index.
-- /about/ : usage guidance and limitations.
-- /{LegacySubject}/*.html : compatibility redirects; original PDF URLs preserved.
+## 3. 模块边界
 
-## UX references
+- Build-time 读取原始 data.js 并生成静态页面；不在浏览器执行原始课程脚本。
+- V1.2 客户端依赖浏览器原生 Intl.Segmenter / localStorage；本地状态无服务端持久化。未知/受限存储应按优雅降级处理。
+- V1.3-design src/resources/rights-policy.mjs 只验证资源元数据和准入状态；**尚未建立持久的私有资源审核后台**。
+- 正式的来源、题目、课程方案等实体必须经审核后从独立数据层构建，不可直接混入历史知识 JSON。
 
-- Khan Academy: course → unit → lesson discovery and quick search: https://www.khanacademy.org/
-- 国家中小学智慧教育平台: resource grouping by stage, course and subject: https://basic.smartedu.cn/
-- BBC Bitesize: subject → topic navigation and exam revision guides: https://www.bbc.co.uk/bitesize/
+## 4. 可信边界与失效策略
 
-The implementation is original; no branded graphics, site designs, or course content is copied.
+1. 真实性：官方网页、仓库 PDF、PDF 页码候选、教师审核是不同证据等级。
+2. 使用权：sourceUrl 公开并不授予题干、图片或解析的转载、分发或 AI 处理权。
+3. 教学质量：教师或独立校核者验证答案、难度、知识映射；机器标签只是建议。
+4. 适用性：年份、地区、课程标准版本与卷别必须绑定证据。Unknown 不得默认为全国适用。
+5. 撤回：取消授权后须阻断页面、导出、搜索索引、缓存与 AI 索引；此流程仍待实施。
+6. 隐私：V1.2 浏览器收藏/阅读标记不同于未来学生诊断、班级名单或成绩档案；后者必须先完成权限与隐私设计。
 
-## Future architecture increments
+## 5. 性能与验证实际边界
 
-### Source verification
-Add official issuer, publication date, canonical URL, file SHA-256, copyright, page/section references, review status and historical applicability. Block unsupported “latest” claims.
+- 已有 Node 测试、链接校验、PDF 内容缓存审计与可重复静态构建。
+- **未完成**真实 HTTP 浏览器端 E2E、全平台屏幕阅读器实测、完整视觉回归、独立数学题目评估。
+- V1.3 独立验收应由测试运行器、资源审核者与评测器三种角色分离。见 [V1.3_TEST_STRATEGY.md](V1.3_TEST_STRATEGY.md)。
 
-### Structured learning
-Add ExamProfile keyed by year, region and subject only for verified official sources, concept aliases, prerequisite edges and legal original practice questions.
+## 6. 后续架构
 
-### Evaluation
-Add Chinese segmentation and retrieval benchmarks; source-grounded RAG only after evidence, privacy and versioning gates. Include independent citation-fidelity and abstention tests.
-
-## Release checks
-
-- All 10 original datasets parse.
-- Recursive normalization retains nested children and unique identifiers.
-- All generated HTML local references resolve.
-- Legacy PDF assets are copied from their sources.
-- PR CI successfully builds and uploads website artifact.
-- Real browser keyboard/mobile E2E and PDF-official-origin checks remain outstanding independent gates.
-
-
-## V1.2 — Personal learning experience
-
-- Exactly one static route for each original knowledge node:
-  /topics/{subjectId}/{nodeId}/.
-- src/knowledge.mjs converts the nested tree to stable indexed nodes and typed relations.
-  parent/child/sibling links are direct legacy-tree facts; title_similarity is a
-  machine-generated suggestion, not a pedagogical prerequisite or verified knowledge claim.
-- src/learning-pages.mjs produces self-contained content pages, provenance notices,
-  related concepts, and the learning dashboard.
-- Browser-only learning state is versioned at gaokao:study:v2. Old V1.0 top-level
-  reviewed marks migrate one-to-one, never filling descendant state automatically.
-- No user data leaves the browser; neither login nor database is required.
-- src/search-core.mjs provides Intl.Segmenter Chinese tokenization with
-  overlapping Han bigrams/trigrams and field-weighted BM25 scoring. It is a
-  deterministic local-search ranking baseline, not an LLM semantic engine.
-- Acceptance gates ensure 269 detail routes, 269 search targets, no broken
-  links, and no dangling related-topic edges.
+参见 [V1.3_SYSTEM_ARCHITECTURE.md](V1.3_SYSTEM_ARCHITECTURE.md)：先实现无需后台的官方资料元数据与原创题目，后扩展教师工作台、学习路线，再根据证据与授权门槛引入服务端 AI。API 密钥绝不能出现在静态站点里。

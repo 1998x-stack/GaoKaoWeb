@@ -1,98 +1,81 @@
 # 学纲 Atlas · GaoKaoWeb
 
-面向历史高考资料的**可检索知识地图**：10 门学科、层级展开、全文检索、原始 PDF 归档与本地阅读进度。
+面向教学与自主学习的可追溯知识地图；当前在线基础仍以**历史高考资料**为主。V1.3 的真题、教师备课、学习路线与 AI 功能处于设计/分阶段建设状态，**尚未作为完整网站功能上线**。
 
-> **重要资料提示**：项目现有 PDF 与条目尚未逐份完成官方版本、年份和地区适用性核验。这里的历史文理科数学与旧选修模块**不代表当年现行高考考试范围**。正式备考请查询本省教育考试院及最新课程标准、考试说明。
+> 注意：仓库已有 11 份 PDF 与原始知识条目的官方原件一致性尚未逐份核实；2019 年历史考纲不能被宣传为当下任意省份或年份的考试要求。任何“官方”标签只对**具体已验证对象**成立。第三方试题与解析不因公开可访问而具备本站全文转载权。
 
-## 本轮重构
+## 先读什么
 
-- 新首页：知识地图式导航，按学科群组筛选，快速进入全局搜索。
-- 学科详情：自动生成分类，递归展示任意深度的知识树，全部展开/折叠、全文筛选。
-- 阅读标记：顶层主题的阅读状态保存在浏览器 localStorage，不需要账号。
-- 搜索：无需服务器的跨学科索引，按标题相关性排序，链接定位到对应主题。
-- 归档：原始 PDF 集中入口，显示“历史资料 · 待核验”标识。
-- 兼容：保留旧学科 HTML / PDF URL，旧 HTML 入口重定向至新版学科。
-- 部署：Node.js 内置模块构建，无第三方运行依赖；CI 运行测试、构建及链接校验，Pages 仅发布 dist。
-- 安全：内容通过 textContent 展示，不把知识字段当 HTML 插入。
+[文档总览](docs/INDEX.md) | [架构与代码地图](docs/ARCHITECTURE.md) | [路线图](docs/ROADMAP.md) | [V1.3 总体设计](docs/V1.3_SYSTEM_ARCHITECTURE.md) | [来源和版权](docs/V1.3_RESEARCH_RIGHTS.md) | [审核操作](docs/V1.3_EDITORIAL_OPERATIONS.md)
 
-## 运行
+## 已实现的功能（V1.0–V1.2）
 
-需要 Node.js 20+（推荐 22），不需要安装额外依赖：
+- 10 门学科、269 个知识节点、269 个独立静态详情页与可展开目录。
+- 递归知识结构、上下级与相邻目录关联；标题相似推荐是**未审定的探索提示**，不是教学先修关系。
+- 浏览器端中文检索：Intl.Segmenter、汉字二元/三元片段和字段加权 BM25。
+- 收藏、已阅读标记、最近阅读与学科进度总览；数据仅保存在**当前浏览器**，不是账号同步或学习掌握度诊断。
+- 11 份本地 PDF 指纹与来源元数据，269 条节点文档关联、116 个具有候选页码的节点和 134 条候选页码（**未人工审定**）。
+- 来源核验中心与旧版 URL 兼容；页面标注历史资料及版本限制。
+
+现有自动测试/静态构建不能证明浏览器跨设备 E2E、无障碍等级或 PDF 官方原件相同性；详见[测试矩阵](docs/V1.3_TEST_STRATEGY.md)。
+
+## V1.3：已提交的是研究、数据契约与审核门槛，不是完整业务网站
+
+| 子系统 | 目前 | 后续交付 |
+|---|---|---|
+| 官方来源候选 | 5 条元数据、官方外链、全部为 candidate | 人工复核、可发布的官方资料索引页面 |
+| 版权门槛 | 默认拒绝未授权全文发布的代码与单测 | 明确许可证存证、撤回与审计流程 |
+| 数学教学分类 | 导数、圆锥曲线、三角函数分类草案 | 原创/授权题目、标准解析与教师复核 |
+| 教师资源 | 课程模板和设计规范 | 备课编辑、可合法导出的教学包 |
+| 学习路线 | 数据协议和教学规则 | 诊断、练习、复盘、掌握度证据 |
+| AI 问答 | 风险边界、证据和评测设计 | 审核通过后才试运行；默认关闭 |
+
+[完整产品与数据架构](docs/V1.3_SYSTEM_ARCHITECTURE.md) | [数学题型规范](docs/V1.3_QUESTION_TAXONOMY.md) | [教学资源规范](docs/V1.3_TEACHER_RESOURCES.md) | [路线设计](docs/V1.3_LEARNING_PATHS.md) | [AI 证据准入](docs/V1.3_AI_EVIDENCE_GATES.md)
+
+## 运行及验证
+
+Node.js >=20（建议 22），普通构建不需要安装第三方 Node 包：
 
 ~~~bash
 npm run verify
-cd dist && python3 -m http.server 8000
+cd dist
+python3 -m http.server 8000
 ~~~
 
-在浏览器打开 http://localhost:8000 。不建议通过 file:// 直接打开生成页面，因为搜索和学科内容使用 fetch 加载 JSON。
+打开 http://localhost:8000；不要通过 file:// 测试客户端 fetch。日常部署与 Vercel 构建**不需要** pdfinfo / pdftotext。若要重新抽查原始 PDF 证据，先安装 Poppler，然后运行：
 
-## 新目录
+~~~bash
+npm run audit:pdf
+npm run check:v13
+~~~
+
+verify 包含语法、单元测试、静态构建、内部链接与 V1.3 候选登记约束。参考 [Vercel / GitHub Pages 部署](docs/VERCEL_DEPLOYMENT.md)。
+
+## 核心目录
 
 ~~~text
-content/catalog.json         # 学科元信息，统一历史资料标识
-src/model.mjs                # 旧数据读取、递归规范化、检索索引
-src/templates.mjs            # 可复用页面模板
-src/site.css                 # Design tokens + 统一页面样式
-src/site.js                  # 全局导航、主题、首页筛选
-src/subject.js               # 学科递归知识树和阅读状态
-src/search.js                # 全站静态搜索
-scripts/build.mjs            # 生成 dist，复制原始文档及兼容页面
-scripts/check.mjs            # 检查站内链接、文档与清单
-tests/site.test.mjs          # 数据无损迁移与递归层级测试
-Biology/ ... ScienceMath/    # 原始学科数据（保留，不覆写）
-Principle/                  # 历史总纲 PDF
-dist/                       # 自动生成，禁止手工修改
+content/catalog.json                    旧学科元信息
+content/sources.json                    V1.1 11 份文档的来源登记
+content/pdf-evidence-locations.json     独立核验的本地页码候选缓存
+content/v1.3/                          V1.3 候选源、数学分类草案
+src/model.mjs                           旧数据规范化
+src/knowledge.mjs                       关联图
+src/search-core.mjs                     中文 BM25
+src/study-store.mjs                     本地学习状态
+src/resources/rights-policy.mjs         V1.3 默认拒绝版权规则
+scripts/build.mjs                       dist 静态构建
+scripts/check.mjs                       生成页面与数据检查
+scripts/audit-pdf-evidence.mjs          Poppler 独立证据核验
+scripts/check-v13.mjs                   V1.3 设计登记审核
+docs/INDEX.md                           文档索引与版本事实
+schemas/v1.3/                           下一阶段数据契约
+dist/                                   生成物，不手工修改
 ~~~
 
-## 内容治理
+## 贡献和发布
 
-当前所有资料声明为 historical_unverified。这不意味着每个文件都发表于同一年；需要逐份核验发布机构、年份、适用范围、来源 URL、版本、页码后才能升级状态。
+更新资源时应在 PR 中填写：来源、版权依据、年份/地区/卷别、知识点映射、人工复核结果、测试与回滚影响。外部链接不代表可下载或镜像其全文。题目/数学答案需通过教研审核后发布。不得把机器匹配候选写成“已人工验证”；发布状态和授权状态相互独立。详见 [编辑审核运营手册](docs/V1.3_EDITORIAL_OPERATIONS.md)。
 
-任何下一版本如果标注“现行”或“最新”，必须提供对应官方来源和适用考试地区。详见 docs/ARCHITECTURE.md。
+代码许可证与图片、原始 PDF、第三方题目分别核验。原始文件字节不因任何 README 声明获得转载许可。
 
-## 设计研究
-
-参考 Khan Academy 的“学科 → 单元 → 知识点”发现路径，以及国家中小学智慧教育平台按资源和学科进行分类的方式。只吸收信息架构思想，不复制界面、插画或受版权保护的课程内容。
-
-## 发布与开发
-
-- 开发分支：feat/knowledge-hub-rebuild。
-- Pull Request：ci.yml 验证并上传 dist 构建产物。
-- 主分支：pages.yml 测试通过后发布 GitHub Pages。
-- 原始资产：旧版 data.js 和 PDF 保留，支持无损迁移和回归测试。
-
-代码许可和原始 PDF 许可应分别确定。PDF 与外部文件不能因代码许可证而推定可自由再分发。
-
-## V1.1 来源核验（历史资料）
-
-新增 /sources/ 来源核验中心、11 份本地 PDF 的页数与 SHA-256 登记、11 个中国教育考试网 2019 年官方目录，以及教育部 2020 年课程标准通知记录。
-
-每个知识节点绑定来源文件 ID；部分节点显示通过本地 PDF 文本精确匹配找到的候选页码和 PDF 跳转链接。所有页码命中都只是机器建议、未经人工复核，不能证明仓库 PDF 与官方原件一致。
-
-构建需要 poppler-utils (pdfinfo/pdftotext)。更多信息见 docs/SOURCE_GOVERNANCE.md。
-
-
-## V1.2 独立知识页与本地学习中心
-
-- /topics/{subjectId}/{nodeId}/ 为全部知识节点生成独立可分享的静态 URL。
-- /learning/ 展示 10 学科的学习标记覆盖率、收藏夹、近期阅读、本地 JSON 导出和主动确认后清空。
-- 中文检索使用浏览器 Intl.Segmenter + 汉字二元/三元切分 + 字段加权 BM25，支持标题优先和学科筛选。
-- 目录父子/相邻主题是有源结构关系；标题相似仅供探索，不代表官方教学先修关系。
-- 阅读状态仅存在本地浏览器。V1.0 已标记的一级主题自动迁移，不自动标记下级主题完成。
-
-## Vercel static deployment compatibility
-
-The normal Node.js build now uses pinned, independently audited page-location evidence and does not call pdfinfo/pdftotext. Both PDF checksums and the full knowledge graph remain validated. CI runs npm run audit:pdf with Poppler before building. Vercel serves only dist via vercel.json. See docs/VERCEL_DEPLOYMENT.md.
-
-## V1.3 教学资源体系：深度调研与设计阶段
-
-当前仅提交产品架构、证据来源候选、题型分类草案、来源与版权发布审核代码、AI 可引用证据门槛；**未公开第三方真题正文，未上线教师工作台或 AI 问答。**
-
-- [深度调研与合法来源核验](docs/V1.3_RESEARCH_RIGHTS.md)
-- [产品 / 数据模型 / 前后端 / 教师与学生工作流 / 阶段验收](docs/V1.3_SYSTEM_ARCHITECTURE.md)
-- [AI 问答证据约束和评测方案](docs/V1.3_AI_EVIDENCE_GATES.md)
-- [来源候选登记](content/v1.3/source-candidates.json)
-- [资源契约 JSON Schema](schemas/v1.3/resource.schema.json)
-- [数学分类和三个专题试点](content/v1.3/mathematics-taxonomy.json)
-
-运行 `npm run check:v13` 验证来源候选无题干全文、没有把官方评析标为原卷且未经授权不准入正文；`npm run verify` 包含 V1.3 合规门槛单测。
+当前分支状态和 GitHub Pages 发布版本以 GitHub 上的实际 commit/PR 为准，本文不固定可能过期的分支名或部署状态。
