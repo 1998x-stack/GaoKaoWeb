@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "sourceNotice": "本网站收录的原有 PDF 与整理条目尚未逐份完成官方版本核验，统一按历史资料展示，不代表现行考试范围。",
+  "subjects": [
+    {
+      "id": "biology",
+      "dir": "Biology",
+      "name": "生物",
+      "en": "Biology",
+      "group": "science",
+      "symbol": "DNA",
+      "color": "#2F826A",
+      "pdf": "高考-生物大纲.pdf",
+      "intro": "从分子与细胞到遗传进化，系统梳理生物学知识与实验探究能力。"
+    },
+    {
+      "id": "chemistry",
+      "dir": "Chemistry",
+      "name": "化学",
+      "en": "Chemistry",
+      "group": "science",
+      "symbol": "CHE",
+      "color": "#BE664F",
+      "pdf": "高考-化学大纲.pdf",
+      "intro": "认识物质、反应规律和实验方法，按专题查阅历史大纲内容。"
+    },
+    {
+      "id": "chinese",
+      "dir": "Chinese",
+      "name": "语文",
+      "en": "Chinese",
+      "group": "humanities",
+      "symbol": "语",
+      "color": "#A46E41",
+      "pdf": "高考-语文大纲.pdf",
+      "intro": "涵盖现代文、古诗文、语言应用及写作的知识与能力要求。"
+    },
+    {
+      "id": "english",
+      "dir": "English",
+      "name": "英语",
+      "en": "English",
+      "group": "humanities",
+      "symbol": "EN",
+      "color": "#6076BC",
+      "pdf": "高考-英语大纲.pdf",
+      "intro": "词汇、语法、听力、阅读与写作等历史要求的分类索引。"
+    },
+    {
+      "id": "geography",
+      "dir": "Geography",
+      "name": "地理",
+      "en": "Geography",
+      "group": "humanities",
+      "symbol": "GEO",
+      "color": "#4685A5",
+      "pdf": "高考-地理大纲.pdf",
+      "intro": "从自然地理到人文地理，探索空间规律和区域认知。"
+    },
+    {
+      "id": "history",
+      "dir": "History",
+      "name": "历史",
+      "en": "History",
+      "group": "humanities",
+      "symbol": "HIS",
+      "color": "#97668C",
+      "pdf": "高考-历史大纲.pdf",
+      "intro": "纵览中国与世界历史，按时间及主题建立清晰的知识脉络。"
+    },
+    {
+      "id": "humanities-math",
+      "dir": "HumanitiesMath",
+      "name": "文科数学（历史）",
+      "en": "Humanities Mathematics",
+      "group": "archive",
+      "symbol": "M",
+      "color": "#538F87",
+      "pdf": "高考-文科数学大纲.pdf",
+      "intro": "历史文科数学考试大纲整理，保留原始分类以便研究查阅。"
+    },
+    {
+      "id": "physics",
+      "dir": "Physics",
+      "name": "物理",
+      "en": "Physics",
+      "group": "science",
+      "symbol": "PHY",
+      "color": "#C18240",
+      "pdf": "高考-物理大纲.pdf",
+      "intro": "以力学、热学、电磁学及波动光学为线索梳理知识。"
+    },
+    {
+      "id": "politics",
+      "dir": "Politic",
+      "name": "思想政治",
+      "en": "Politics",
+      "group": "humanities",
+      "symbol": "政",
+      "color": "#9D5364",
+      "pdf": "高考-思想政治大纲.pdf",
+      "intro": "经济、政治、文化与哲学专题的历史考试要求资料。"
+    },
+    {
+      "id": "science-math",
+      "dir": "ScienceMath",
+      "name": "理科数学（历史）",
+      "en": "Science Mathematics",
+      "group": "archive",
+      "symbol": "∑",
+      "color": "#496F9D",
+      "pdf": "高考-理科数学大纲.pdf",
+      "intro": "历史理科数学考纲整理，包括函数、几何、概率与计数等。"
+    }
+  ]
+}
