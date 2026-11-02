@@ -37,6 +37,34 @@
     if (text) node.textContent = text;
     return node;
   }
+  function renderEvidence(node, holder) {
+    const evidence = node.provenance;
+    if (!evidence) return;
+    const panel = element('div', 'evidence-panel');
+    const heading = element('strong', 'evidence-heading', '来源证据 · 本地 PDF');
+    panel.appendChild(heading);
+    const pages = evidence.pageCandidates || [];
+    if (pages.length === 0) {
+      panel.appendChild(element('p','evidence-note','未找到可定位的 PDF 原文页码；该条目仍需人工核验。'));
+    } else {
+      const top = element('p','evidence-note','以下仅为本地 PDF 的文本匹配候选页码，尚未确认与官方原件一致。');
+      panel.appendChild(top);
+      const links = element('div','evidence-links');
+      for (const candidate of pages) {
+        const link = element('a','evidence-link','第 ' + candidate.page + ' 页 · 文本匹配 ↗');
+        link.href = '../../documents/' + encodeURIComponent(slug) + '.pdf#page=' + candidate.page;
+        link.title = '匹配内容：' + candidate.anchor + '（待复核）';
+        link.target='_blank';
+        link.rel='noopener noreferrer';
+        links.appendChild(link);
+      }
+      panel.appendChild(links);
+    }
+    const registry = element('a', 'evidence-registry', '查看官方目录与文件状态 →');
+    registry.href = '../../sources/#doc-' + encodeURIComponent(slug);
+    panel.appendChild(registry);
+    holder.appendChild(panel);
+  }
   function renderContent(node, holder) {
     if (node.items.length) {
       const ul = element('ul', 'knowledge-list');
@@ -68,6 +96,7 @@
     const body = element('div', 'knowledge-body');
     renderContent(node, body);
     node.children.forEach(child => body.appendChild(renderNested(child, depth + 1)));
+    renderEvidence(node, body);
     if (node.footer) body.appendChild(element('p', 'node-footer', node.footer));
     details.appendChild(body);
     return details;
@@ -103,6 +132,7 @@
     const body = element('div', 'topic-body');
     renderContent(node, body);
     node.children.forEach(child => body.appendChild(renderNested(child)));
+    renderEvidence(node, body);
     if (node.footer) body.appendChild(element('p', 'node-footer', node.footer));
     section.appendChild(body);
     return section;

@@ -19,6 +19,7 @@ function shell({ title, depth = 0, current = '', body, script = '' }) {
     '<nav class="site-nav" id="site-nav" aria-label="主导航">' +
     navLink(root || './', '首页', current === 'home') +
     navLink(root + 'archive/', '资料归档', current === 'archive') +
+    navLink(root + 'sources/', '来源核验', current === 'sources') +
     navLink(root + 'search/', '知识检索', current === 'search') +
     navLink(root + 'about/', '关于项目', current === 'about') +
     '</nav><div class="header-tools">' +
@@ -31,7 +32,7 @@ function shell({ title, depth = 0, current = '', body, script = '' }) {
     '<div><a class="footer-logo" href="' + (root || './') + '">学纲 <small>ATLAS</small></a>' +
     '<p>让复杂知识变得有迹可循。本站提供历史资料整理与检索，不替代当年官方考试要求。</p></div>' +
     '<div><h3>探索</h3><a href="' + root + 'search/">全文检索</a><a href="' + root + 'archive/">文档归档</a></div>' +
-    '<div><h3>信息</h3><a href="' + root + 'about/">使用说明</a>' +
+    '<div><h3>信息</h3><a href="' + root + 'sources/">资料来源</a><a href="' + root + 'about/">使用说明</a>' +
     '<a href="https://github.com/1998x-stack/GaoKaoWeb" target="_blank" rel="noopener noreferrer">GitHub 源码</a></div>' +
     '</div><div class="container footer-bottom"><span>© 学纲 Atlas · 开源内容索引</span><span>资料需核验 · 请关注文件年份和适用范围</span></div></footer>' +
     '<script src="' + root + 'assets/site.js" defer></script>' +
@@ -95,9 +96,9 @@ export function subjectPage(subject, notice) {
     '<div><div class="subject-hero-tags">' + badge('历史资料 · 待核验', 'tag-amber') + badge(subject.en) + '</div>' +
     '<h1>' + escapeHtml(subject.name) + '</h1><p>' + escapeHtml(subject.intro) + '</p>' +
     '<div class="hero-actions"><a class="button button-primary" href="../../documents/' + subject.id + '.pdf" download>下载原始 PDF ↗</a>' +
-    '<a class="button button-plain" href="../../archive/">查看其他学科 →</a></div></div>' +
+    '<a class="button button-plain" href="../../sources/#doc-' + subject.id + '">查看来源与核验状态 →</a></div></div>' +
     '<div class="subject-hero-mark" aria-hidden="true">' + escapeHtml(subject.symbol) + '</div></section>' +
-    '<div class="page-note"><span aria-hidden="true">ⓘ</span><span>' + escapeHtml(notice) + '</span></div>' +
+    '<div class="page-note"><span aria-hidden="true">ⓘ</span><span>' + escapeHtml(notice) + ' <a href="../../sources/#doc-' + subject.id + '">查看出处核验详情 ↗</a></span></div>' +
     '<div class="study-layout" data-subject-page="' + escapeHtml(subject.id) + '">' +
     '<aside class="study-sidebar"><div class="sticky-panel"><div class="side-heading">内容导航 <span data-section-count>' + subject.sectionCount + ' 个主题</span></div>' +
     '<div id="subject-nav" class="topic-nav" aria-label="主题导航"></div>' +
@@ -155,6 +156,53 @@ export function aboutPage(notice) {
     '<article class="prose-card"><h2>参与改进</h2><p>欢迎报告错误链接、知识遗漏及数据来源问题。任何内容更新都应提供可公开验证的来源及变更理由。</p>' +
     '<a class="subtle-link" href="https://github.com/1998x-stack/GaoKaoWeb/issues" target="_blank" rel="noopener noreferrer">GitHub Issues ↗</a></article></div></div>';
   return shell({ title:'关于与使用说明', depth:1, current:'about', body });
+}
+
+export function sourcesPage(registry) {
+  const docById = new Map(registry.officialDocuments.map(entry => [entry.id, entry]));
+  const rows = registry.localDocuments.map(doc => {
+    const context = docById.get(doc.officialCatalogContextId);
+    const name = doc.title;
+    const anchor = doc.id.replace(/^local-/, '');
+    return '<tr id="doc-' + escapeHtml(anchor) + '">' +
+      '<td><strong>' + escapeHtml(name) + '</strong>' +
+      '<small>本地归档 · ' + doc.pages + ' 页</small></td>' +
+      '<td><a href="' + escapeHtml(context.officialUrl) + '" target="_blank" rel="noopener noreferrer">' +
+      '2019 年官方学科目录 ↗</a><small>官方条目发布日期：' + escapeHtml(context.publishedAt) + '</small></td>' +
+      '<td><span class="status-dot"></span>本地原件尚未比对<small>地区与本地发布日期：未知</small></td>' +
+      '<td><a href="../' + escapeHtml(doc.file) + '">查看仓库 PDF ↗</a>' +
+      '<small class="hash-prefix" title="' + escapeHtml(doc.sha256) + '">SHA-256 ' + escapeHtml(doc.sha256.slice(0, 12)) + '…</small></td>' +
+      '</tr>';
+  }).join('');
+  const other = registry.otherOfficialSources.map(source =>
+    '<article class="prose-card"><h2>' + escapeHtml(source.title) + '</h2>' +
+    '<p>教育部 · ' + escapeHtml(source.publishedAt) + ' · ' + escapeHtml(source.documentNo) + '</p>' +
+    '<p>该文件作为课程政策背景登记，不等于现有 269 个知识节点已经逐一匹配到现行课程标准。</p>' +
+    '<a class="subtle-link" href="' + escapeHtml(source.officialUrl) + '" target="_blank" rel="noopener noreferrer">查看教育部官方公告 ↗</a></article>'
+  ).join('');
+  const body = '<div class="container page-top">' +
+    '<nav class="breadcrumbs" aria-label="面包屑"><a href="../">首页</a><span>/</span><span>来源核验</span></nav>' +
+    '<div class="page-heading"><span class="eyebrow">SOURCE PROVENANCE</span><h1>来源证据与版本管理</h1>' +
+    '<p>官方发布记录和仓库中的本地 PDF 是两个不同的证据实体。只有核对原件后才能确认它们为同一版本。</p></div>' +
+    '<div class="provenance-grid">' +
+    '<div class="provenance-stat"><strong>11</strong><span>官方历史考纲入口（已确认网页）</span></div>' +
+    '<div class="provenance-stat"><strong>11</strong><span>仓库 PDF（已记录哈希及页数）</span></div>' +
+    '<div class="provenance-stat"><strong>0</strong><span>与官网原件一致性已核验</span></div>' +
+    '</div>' +
+    '<div class="page-note"><span>ⓘ</span><span>' + escapeHtml(registry.policy.disclosure) +
+    ' ' + escapeHtml(registry.policy.candidateMeaning) + '</span></div>' +
+    '<section class="source-guide"><h2>证据如何分级？</h2><div class="source-guide-grid">' +
+    '<div><strong>已核验官方目录</strong><p>仅表示官网存在该学科与发布日期，不表明仓库 PDF 与其相同。</p></div>' +
+    '<div><strong>本地 PDF 文本匹配</strong><p>以本地 PDF 页码和提取文本进行精确匹配；页码为程序建议，尚未经人工审查。</p></div>' +
+    '<div><strong>未匹配 / 待复核</strong><p>不能定位到页码时不猜测，不能填入官方发布年份、地区或已审定状态。</p></div>' +
+    '</div></section>' +
+    '<section class="source-index"><div class="section-heading"><div><span class="eyebrow">DOCUMENT REGISTRY</span><h2>各学科资料清单</h2>' +
+    '<p>2019 年全国考试大纲为历史参考，不保证适用于2026年考试或特定省份。</p></div></div>' +
+    '<div class="archive-table-wrap"><table class="archive-table"><thead><tr><th>本地文档</th><th>相关官方目录</th><th>核验状态</th><th>文件与指纹</th></tr></thead><tbody>' +
+    rows + '</tbody></table></div></section>' +
+    '<section class="source-policy"><div class="section-heading"><div><span class="eyebrow">CURRENT POLICY CONTEXT</span><h2>现行课程标准相关依据</h2></div></div>' +
+    '<div class="about-grid">' + other + '</div></section></div>';
+  return shell({title:'来源与证据核验',depth:1,current:'sources',body});
 }
 
 export function legacyRedirect(destination) {

@@ -1,6 +1,6 @@
 {
   "name": "gaokao-knowledge-hub",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check.mjs",
     "verify": "npm run lint && npm run test && npm run build && npm run check",
-    "lint": "node --check src/site.js && node --check src/subject.js && node --check src/search.js && node --check src/model.mjs && node --check src/templates.mjs && node --check scripts/build.mjs && node --check scripts/check.mjs"
+    "lint": "node --check src/site.js && node --check src/subject.js && node --check src/search.js && node --check src/model.mjs && node --check src/templates.mjs && node --check scripts/build.mjs && node --check scripts/check.mjs && node --check src/provenance.mjs"
   },
   "engines": {
     "node": ">=20"
