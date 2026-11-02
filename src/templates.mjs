@@ -1,11 +1,11 @@
-const escapeHtml = (value) => String(value).replace(/[&<>"']/g, char => ({
+export const escapeHtml = (value) => String(value).replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[char]));
 
 function navLink(href, label, active) {
   return '<a class="nav-link' + (active ? ' is-active' : '') + '" href="' + href + '">' + label + '</a>';
 }
-function shell({ title, depth = 0, current = '', body, script = '' }) {
+export function shell({ title, depth = 0, current = '', body, script = '' }) {
   const root = '../'.repeat(depth);
   return '<!doctype html>\n' +
     '<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
@@ -21,6 +21,7 @@ function shell({ title, depth = 0, current = '', body, script = '' }) {
     navLink(root + 'archive/', '资料归档', current === 'archive') +
     navLink(root + 'sources/', '来源核验', current === 'sources') +
     navLink(root + 'search/', '知识检索', current === 'search') +
+    navLink(root + 'learning/', '我的学习', current === 'learning') +
     navLink(root + 'about/', '关于项目', current === 'about') +
     '</nav><div class="header-tools">' +
     '<a class="header-search" href="' + root + 'search/" aria-label="搜索全部知识点"><span aria-hidden="true">⌕</span><span>搜索</span><kbd>/</kbd></a>' +
@@ -36,7 +37,7 @@ function shell({ title, depth = 0, current = '', body, script = '' }) {
     '<a href="https://github.com/1998x-stack/GaoKaoWeb" target="_blank" rel="noopener noreferrer">GitHub 源码</a></div>' +
     '</div><div class="container footer-bottom"><span>© 学纲 Atlas · 开源内容索引</span><span>资料需核验 · 请关注文件年份和适用范围</span></div></footer>' +
     '<script src="' + root + 'assets/site.js" defer></script>' +
-    (script ? '<script src="' + root + 'assets/' + script + '" defer></script>' : '') +
+    (script ? '<script type="module" src="' + root + 'assets/' + script + '"></script>' : '') +
     '</body></html>\n';
 }
 function badge(text, type = '') {

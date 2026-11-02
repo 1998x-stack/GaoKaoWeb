@@ -81,6 +81,37 @@ if (covered !== manifest.nodes) issues.push('Provenance coverage mismatch: '+cov
 if (pageCandidates !== manifest.pageCandidates) issues.push('Page candidate count mismatch');
 const ov = sources.localDocuments.find(x=>x.id==='local-overview');
 if (!ov || digest(path.join(dist,ov.file))!==ov.sha256) issues.push('Overview checksum mismatch');
+// V1.2 independent pages, deep-links, relation graph, and search targets.
+const index=JSON.parse(fs.readFileSync(path.join(dist,'data/topic-index.json'),'utf8'));
+const relationGraph=JSON.parse(fs.readFileSync(path.join(dist,'data/knowledge-graph.json'),'utf8'));
+const searchIndex=JSON.parse(fs.readFileSync(path.join(dist,'data/search-index.json'),'utf8'));
+const topicIds=new Set(index.topics.map(row=>row.id));
+if(manifest.schemaVersion!=='1.2') issues.push('Expected version 1.2');
+if(index.topics.length!==manifest.nodes || manifest.topics!==manifest.nodes ||
+   topicIds.size!==manifest.nodes) issues.push('Topic page cardinality / ID mismatch');
+if(searchIndex.length!==manifest.nodes)issues.push('Search index lost nodes');
+for(const topic of index.topics) {
+  if(!/^[a-z0-9_-]+$/i.test(topic.id))issues.push('Unsafe topic route: '+topic.id);
+  const expected='topics/'+topic.subjectId+'/'+topic.id+'/';
+  if(topic.url!==expected)issues.push('Topic canonical URL mismatch: '+topic.id);
+  const file=path.join(dist,expected,'index.html');
+  if(!fs.existsSync(file))issues.push('Missing individual topic page: '+topic.id);
+  if(!Array.isArray(relationGraph.relations[topic.id]))issues.push('Missing relation graph node: '+topic.id);
+  else for (const relation of relationGraph.relations[topic.id]) {
+    if(!topicIds.has(relation.id)||relation.id===topic.id)issues.push('Dangling/self relation: '+topic.id);
+    if(!['parent','child','sibling','title_similarity'].includes(relation.type))
+      issues.push('Invalid relation type: '+topic.id);
+  }
+  if(topic.parentId&&!topicIds.has(topic.parentId))issues.push('Missing topic parent: '+topic.id);
+}
+for(const doc of searchIndex) {
+  if(!topicIds.has(doc.id)||doc.url!=='topics/'+doc.subjectId+'/'+doc.id+'/')
+    issues.push('Search index points at missing topic: '+doc.id);
+}
+if(!fs.existsSync(path.join(dist,'learning','index.html')))issues.push('Missing learning dashboard');
+for (const asset of ['search-core.mjs','study-store.mjs','detail.js','learning.js']){
+  if(!fs.existsSync(path.join(dist,'assets',asset))) issues.push('Missing learning asset: '+asset);
+}
 if (issues.length) {
   console.error(issues.join('\n'));
   process.exit(1);
