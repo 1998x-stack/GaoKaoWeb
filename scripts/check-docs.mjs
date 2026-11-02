@@ -47,7 +47,7 @@ if(topicDraft.metadata?.classificationStatus!=='draft_requires_teacher_review'||
   errors.push('Math topic mappings require a documented teacher review');
 const map=fs.readFileSync('docs/INDEX.md','utf8');
 const subjectsIndex=fs.readFileSync('docs/subjects/INDEX.md','utf8');
-for(const id of subjects)if(!subjectsIndex.includes('('+id+'.md)'))
+for(const id of subjects)if(!subjectsIndex.includes('('+id+'.md)') && !subjectsIndex.includes('(./'+id+'.md)'))
   errors.push('Subject doc omitted in index: '+id);
 if(!map.includes('(subjects/INDEX.md)'))errors.push('Docs hub does not link to subjects');
 if(errors.length){console.error(errors.join('\n'));process.exit(1);}
