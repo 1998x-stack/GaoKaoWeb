@@ -79,3 +79,7 @@ dist/                       # 自动生成，禁止手工修改
 - 中文检索使用浏览器 Intl.Segmenter + 汉字二元/三元切分 + 字段加权 BM25，支持标题优先和学科筛选。
 - 目录父子/相邻主题是有源结构关系；标题相似仅供探索，不代表官方教学先修关系。
 - 阅读状态仅存在本地浏览器。V1.0 已标记的一级主题自动迁移，不自动标记下级主题完成。
+
+## Vercel static deployment compatibility
+
+The normal Node.js build now uses pinned, independently audited page-location evidence and does not call pdfinfo/pdftotext. Both PDF checksums and the full knowledge graph remain validated. CI runs npm run audit:pdf with Poppler before building. Vercel serves only dist via vercel.json. See docs/VERCEL_DEPLOYMENT.md.

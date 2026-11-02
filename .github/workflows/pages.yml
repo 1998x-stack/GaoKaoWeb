@@ -20,6 +20,8 @@ jobs:
           node-version: '22'
       - name: Install PDF inspection tools
         run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - name: Audit committed PDF evidence against original files
+        run: npm run audit:pdf
       - name: Test, build and validate
         run: npm run verify
       - uses: actions/configure-pages@v5
