@@ -1,131 +1,72 @@
-# GaokaoWeb UI/UX Enhancements
+# GaoKaoWeb 交互/无障碍与视觉改进规范
 
-## Overview
-Comprehensive design improvements for the GaokaoWeb educational platform using professional UI/UX principles from the ui-ux-pro-max design system.
+**文档性质：现状审查 + 待完成的设计任务，不是声称已经达到 WCAG AA 或通过跨浏览器性能认证。** 旧版文档中的 FCP/LCP/FID 数值、全平台无障碍勾选和固定配色并没有可追溯测试，已移除成功宣称。
 
-## Key Improvements
+## 1. 已实现的可复用交互（需 E2E 验证）
 
-### 1. Typography Enhancement
-- **Added Academic Font Pairing**: Crimson Pro (serif) for headings + Atkinson Hyperlegible (sans-serif) for body text
-- **Rationale**: Crimson Pro provides scholarly authority while Atkinson Hyperlegible offers excellent readability for educational content
-- **Implementation**: Imported via Google Fonts with fallbacks to system fonts
+- 学科卡片、知识目录树、知识详情页、主题搜索、PDF 来源面板和 /learning/ 学习中心。
+- light/dark 模式的本地选择、手机菜单、阅读/收藏标记。
+- 知识节点独立 URL，搜索结果直接进入详情；页面含历史资料与核验限制。
+- CSS 响应式断点、基础键盘语义及跳转正文入口。
 
-### 2. Color Palette Optimization
-- **Primary**: Deep blue (#1E40AF) for professional academic feel
-- **Secondary**: Bright blue (#3B82F6) for interactive elements
-- **CTA**: Green (#22C55E) for positive actions (downloads, success states)
-- **Background**: Light blue-gray (#EFF6FF) for reduced eye strain
-- **Text**: Dark navy (#1E3A8A) for optimal contrast
-- **Dark Mode**: Fully supported with appropriate contrast ratios
+**不应声称**所有数据对无 JS 浏览器完全可用：当前搜索、学科目录与进度读取依赖 JS 和 fetch。没有实测数据的“屏幕阅读器兼容”“CLS<0.1”等不是已完成结论。
 
-### 3. Enhanced Card Design
-- **Improved Hover Effects**: Subtle lift (translateY) with enhanced shadow
-- **Smooth Transitions**: 300ms cubic-bezier timing for natural feel
-- **Active States**: Pressed effect on tap/click for tactile feedback
-- **Staggered Animations**: Cards animate in sequence on page load
-- **Category Colors**: Science (orange gradient) vs Liberal Arts (blue gradient)
+## 2. V1.3 信息架构与角色区隔
 
-### 4. Accessibility Improvements
-- **Skip Navigation**: Added "skip to main content" link for keyboard users
-- **Focus Indicators**: Visible focus rings on all interactive elements
-- **Keyboard Navigation**: Full keyboard support for filter buttons and cards
-- **ARIA Support**: Semantic HTML structure improved
-- **Reduced Motion**: Respects user preferences for reduced motion
-- **High Contrast**: Enhanced support for high contrast mode
+桌面导航目标：知识 / 试卷来源 / 数学专题 / 学习路线 / 教师备课 / 我的学习 / 来源中心。
+移动端导航优先知识、试题、学习、我的，教师需明确切换。正式上线之前不显示会落入空页面的链接。
 
-### 5. Responsive Design Refinements
-- **Mobile-First**: Optimized for touch devices with larger tap targets
-- **Grid Layout**: Auto-adjusting grid with proper gaps and spacing
-- **Typography Scale**: Fluid typography using clamp() for all screen sizes
-- **Touch Optimizations**: Removed hover effects on touch devices, added active states
-- **Safe Areas**: Proper padding for notched devices
+### 资源卡组件契约
 
-### 6. Interactive Enhancements
-- **Filter Animations**: Smooth fade in/out when filtering subjects
-- **Button States**: Hover, focus, and active states for all buttons
-- **Card Interactions**: Scale and rotation effects on hover
-- **Click Tracking**: Basic analytics tracking for user interactions
-- **Error Handling**: Graceful handling of missing PDF files
+每张卡显示：类型（官方评析/官方试卷/原创习题/许可习题）、标题、真实年份、地区、学科、来源、核验状态、使用权范围、最后审查日期；缺失地区不能显示“适用于全国”。
 
-### 7. Performance Optimizations
-- **CSS Custom Properties**: Efficient theming with CSS variables
-- **Will-Change**: Proper GPU acceleration for animations
-- **Transform Z(0)**: Forces hardware acceleration on cards
-- **Reduced Motion**: Disables animations for users who prefer less motion
+按钮必须与权限相符：
+- link-only → “访问来源网站”，不得提供虚假的下载、打印、AI 解读正文。
+- authorized hosted → “进入题目”“加入练习”，可导出取决于 distribute 权限。
+- review_required → 后台仅审稿人可见；不得在学生页以完整习题发布。
+- revoked → 下架提示，移出搜索/导出/AI。
 
-### 8. Code Quality Improvements
-- **Consistent Transitions**: Standardized timing and easing functions
-- **Semantic CSS**: Better class naming and organization
-- **Mobile Menu**: Prepared structure for mobile filter menu
-- **Print Styles**: Optimized CSS for printing exam outlines
+### 题目详情
 
-## Technical Implementation
+顶部：归属与版本 / 题型 / 地区 / 权限。
+正文：原文（仅合法全文托管）、渐进提示、可验证解题步骤、常见错误、关联知识点与原始证据。
+侧栏：同类题、不同解法、知识链、合法资源跳转；不臆造“高考真题”“满分率”。
 
-### CSS Architecture
-```css
-/* Design Tokens */
-:root {
-  --edu-primary: #1E40AF;
-  --edu-secondary: #3B82F6;
-  /* ... other design tokens */
-}
+### 教师备课
 
-/* Base Styles */
-body {
-  font-family: 'Atkinson Hyperlegible', sans-serif;
-}
+左侧教学目标树，中央课时编辑器，右侧授权/版权/知识点审核仪表。
+生成/导出时复用 RightsGate，不允许因点击“导出 Word/PDF”而绕开 distribute 限制。
 
-/* Component Styles */
-.subject-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+## 3. Design tokens（拟议，需对照现有 CSS）
 
-/* Responsive Styles */
-@media (max-width: 768px) { /* ... */ }
+| token | 用途 | 设计约束 |
+|---|---|---|
+| surface / surface-muted | 页面、卡片 | 保留暗色方案，避免纯白对比刺眼 |
+| ink / ink-soft | 主文、次文 | 正文对比度以 WCAG 2.2 AA 标准评估 |
+| accent | 按钮、链接 | 不仅用颜色编码状态，附文字/图标 |
+| warning / success / error | 审核、来源状态 | “候选页码”不可用成功绿表示已核验 |
+| spacing | 8px 基础律 | 小屏触摸目标避免过密、保留明确焦点 |
 
-/* Accessibility Styles */
-@media (prefers-reduced-motion: reduce) { /* ... */ }
-@media (prefers-contrast: high) { /* ... */ }
-```
+不在本轮宣称已经将上述设计 token 全部接入生产 CSS。
 
-### JavaScript Enhancements
-- **Progressive Enhancement**: Works without JavaScript, enhanced with it
-- **Event Delegation**: Efficient event handling
-- **Keyboard Support**: Full keyboard navigation
-- **Error Handling**: Graceful degradation
-- **Performance**: Debounced animations and efficient DOM queries
+## 4. 关键交互验收场景
 
-## Browser Support
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-- Progressive enhancement for older browsers
-- Full dark mode support
-- Accessibility features across all platforms
+1. 无障碍：键盘从导航到搜索、结果、知识详情、收藏、PDF 访问正常；可见焦点；ARIA 状态随交互改变。
+2. 暗色：普通文字、反馈、占位和来源警示有足够对比度；色盲场景不只靠颜色。
+3. 小屏：360/390/768/1024/1440px 检查无水平溢出；PDF 链接与教师导出按钮可操作。
+4. 课程内容：长标题/数学式/表格不裁切，图片有合适文字说明；数学符号完整阅读。
+5. 来源：官方评析不能呈现“原卷题目” CTA；未许可资源没有下载/编辑/AI 全文操作。
+6. 错误与隐私：无网络、localStorage 不可用、原站 404、外链被撤回、学习标记重置。
+7. 性能：使用 Lighthouse/Playwright 对移动/桌面实测并存档；p75 LCP/INP/CLS 按页面类别记录，**不预先宣称达标**。
 
-## Testing Checklist
-- [x] Responsive at 375px, 768px, 1024px, 1440px
-- [x] Dark mode functionality
-- [x] Keyboard navigation
-- [x] Screen reader compatibility
-- [x] Touch device optimization
-- [x] Print styles
-- [x] Reduced motion support
-- [x] High contrast mode
-- [x] Cross-browser compatibility
+## 5. 验收清单（目前为待验证）
 
-## Performance Metrics
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
-- **First Input Delay**: < 100ms
+- [ ] GitHub-hosted Playwright HTTP E2E，Chromium+Firefox+WebKit，包含移动视窗
+- [ ] 键盘 / 屏幕阅读器抽样测试
+- [ ] axe-core 扫描 + 人工审核（工具通过不能单独认证 AA）
+- [ ] Lighthouse 关键指标与网络节流报告
+- [ ] 检索专题黄金集的排序质量对比
+- [ ] 教师备课用户试用与错误恢复
+- [ ] 打印/导出资源的版权义务回归测试
 
-## Future Enhancements
-- PWA support with service worker
-- Offline PDF caching
-- Search functionality
-- User preferences persistence
-- Analytics integration
-- A/B testing framework
-
-## Credits
-Design system powered by ui-ux-pro-max skill with educational best practices from academic UX research.
+如需代码落地，必须另设实施 PR 和测试结果，不能以这份设计规范替代。

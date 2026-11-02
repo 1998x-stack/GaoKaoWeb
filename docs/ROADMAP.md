@@ -1,18 +1,50 @@
-# Refactor roadmap
+# 路线图 / Release Roadmap
 
-| Stage | Objective | Verification |
+更新基线 2026-11-02。每个阶段的“计划验收”不等于已完成的事实。**以 CI 记录及实际部署版本为准**。
+
+## 现有基线
+
+| 阶段 | 已实现 | 尚有缺口 |
 |---|---|---|
-| 00 | Stable navigation, recursion, deployment | Legacy links, deep nodes and CI tests |
-| 01 | Source catalog + normalized data | Ten subjects migrated, originals preserved |
-| 02 | Coherent UI | Home, subject, search, archive, about, responsive |
-| 03 | Evidence provenance | Source ID, year, region, PDF page and reviewer |
-| 04 | Learning features | Dependency graph, licensed practice corpus, pathways |
-| 05 | Grounded AI | RAG with citations, regression and abstention evaluation |
+| V1.0 | 10 学科、269 节点、静态导航 | 旧内容真实性审查 |
+| V1.1 | 来源目录、11 PDF 指纹、116 节点有页码候选 | PDF 对照官方原件、人工页码审核、版权许可 |
+| V1.2 | 269 独立详情页、BM25、学习中心、类型化目录关系 | 跨浏览器 E2E、检索质量黄金集、稳定 topicId 迁移 |
+| V1.3-design | 五条链接候选、版权默认拒绝规则、数学题型与 AI 设计 | 业务页面、真实题目、教研审核、教师备课功能尚未实现 |
 
-## Open limitations
+## V1.3 规划优先级
 
-- Official original PDF provenance, publication year and applicability.
-- Copyright and redistribution permissions for third-party files.
-- Live browser E2E, visual regression and real Lighthouse measurement.
-- Differences between historical subjects and current regional exam profiles.
-- Search ranking and Chinese tokenization benchmark; initial search uses substring matching.
+| Stage | 工作包 | 交付物 | DoD 验收 | 依赖 |
+|---|---|---|---|---|
+| 1.3.0-P0 | 来源真实性与使用权 | URL 检查、元数据/版权/地区状态、source+rights 校验、外链列表 | 来源/授权分开审核；**未知权限不托管全文**；候选不误标正式试卷 | 当前权益规则、V1.1 证据 |
+| 1.3.0-P1 | 稳定资源身份 | Source / Resource / Rights / Evidence / Revision 契约、TopicAlias | 引用完整、撤回后传播范围可审计、版本变更可复现 | P0 |
+| 1.3.1 | 数学试点 | 导数/圆锥曲线/三角函数原创题、答案、变式、易错点 | 100% 已发布题有答案审核和授权记录；映射有复核 | 1.3.0 |
+| 1.3.2 | 教师备课 | 教案模板、例题与练习包、合法导出 | 45/90 分钟流程可用，导出物继承版权义务 | 1.3.1 |
+| 1.3.3 | 学习路线 | 入门诊断、专题学习、阶段检查及复盘 | 有审核的先修 DAG、可回放状态、不能把“读过”当“掌握” | 1.3.1 |
+| 1.3.4 | AI 证据试点 | 服务端 RAG、引用核验、拒答 | ≥200 设计金集，权利门控、引用真实性与数学质量达标 | 1.3.0–1.3.3 |
+
+具体目标与质量指标见 [V1.3_TEST_STRATEGY.md](V1.3_TEST_STRATEGY.md)。这些比例是**拟议门槛**；现有 5 条资源均未发布题目全文。
+
+## 里程碑与依赖序列
+
+~~~text
+来源目录/版权与发布审核 → 元数据与关系稳定 → 数学原创题小样
+                                             │
+                                教师备课 + 学习路线
+                                             │
+                                 独立评测与数据授权
+                                             │
+                                可验证 AI 小规模试点
+~~~
+
+## 待决事项（须记录 ADR 后开发）
+
+- 官网外链收录规则和上游下架/撤回处置。
+- 内容版权归属/第三方试题图片是否可展示；需要合法文件许可而非推断。
+- 哪些 2026 上海考纲/课标与试题可对应旧节点，以及是否需要新题型节点。
+- 浏览器本地进度如何迁移至未来账号；不得暗中采集未成年人信息。
+- 静态 PR 审核达到什么规模后再迁移 PostgreSQL/对象存储。
+- AI 使用何种模型不应先于来源授权、评测和服务端安全设计。
+
+## 发布/回滚约定
+
+每个版本需写清 release commit、数据模式版本、资源审核快照、CI 结果、外链/版权风险和回滚方案。资源撤回优先于缓存，可立即阻断公开内容（具体实现待建设）。
