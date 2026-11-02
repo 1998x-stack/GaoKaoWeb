@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,6 +36,16 @@ if (manifest.subjects !== 10 || manifest.nodes < 80 || manifest.searchEntries < 
 for (const subject of catalog.subjects) {
   if (!fs.existsSync(path.join(dist, 'subjects', subject.id, 'index.html'))) issues.push('No page: ' + subject.id);
   if (!fs.existsSync(path.join(dist, 'documents', subject.id + '.pdf'))) issues.push('No PDF: ' + subject.id);
+}
+function digest(file) {
+  return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+for (const subject of catalog.subjects) {
+  const source = path.join(root, subject.dir, subject.pdf);
+  const published = path.join(dist, 'documents', subject.id + '.pdf');
+  if (fs.existsSync(published) && digest(source) !== digest(published)) {
+    issues.push('PDF source bytes changed: ' + subject.id);
+  }
 }
 if (issues.length) {
   console.error(issues.join('\n'));

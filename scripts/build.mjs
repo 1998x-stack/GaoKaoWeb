@@ -42,7 +42,6 @@ for (const subject of catalog.subjects) {
   copy(pdfSource, 'documents/' + subject.id + '.pdf');
   output.documents++;
   // Preserve legacy deep links while moving all new navigation to canonical routes.
-  const originalHtml = subject.dir.toLowerCase().replace(/[^a-z]/g, '');
   const legacyFilename = {
     Biology: 'biology', Chemistry: 'chemistry', Chinese: 'chinese',
     English: 'english', Geography: 'geography', History: 'history',

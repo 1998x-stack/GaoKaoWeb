@@ -39,3 +39,24 @@ test('catalog links to actual source PDFs', () => {
     assert.ok(fs.existsSync(path.join(subject.dir, subject.pdf)), subject.id);
   }
 });
+
+test('every nested text item survives legacy normalization in original order', () => {
+  function collect(nodes, output = []) {
+    for (const node of nodes) {
+      output.push('TITLE:' + node.title);
+      for (const item of node.items || []) output.push('ITEM:' + item);
+      for (const part of node.content || []) {
+        output.push('PART:' + part.title);
+        for (const item of part.items || []) output.push('ITEM:' + item);
+      }
+      if (node.footer) output.push('FOOTER:' + node.footer);
+      collect(node.children || [], output);
+    }
+    return output;
+  }
+  for (const subject of catalog.subjects) {
+    const original = readLegacyData(path.join(subject.dir, 'data.js'));
+    const normalized = normalizeSyllabus(original, subject.id);
+    assert.deepEqual(collect(normalized), collect(original), 'Lost source content: ' + subject.id);
+  }
+});

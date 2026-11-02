@@ -23,7 +23,7 @@
     if (!term) {
       count.textContent = '输入关键词开始检索';
       empty.hidden = true;
-      history.replaceState(null, '', location.pathname);
+      if (location.protocol === 'http:' || location.protocol === 'https:') history.replaceState(null, '', location.pathname);
       return;
     }
     const words = term.split(/\s+/).filter(Boolean);
@@ -49,7 +49,7 @@
     }
     const next = new URL(location.href);
     next.searchParams.set('q', input.value.trim());
-    history.replaceState(null, '', next.pathname + next.search);
+    if (location.protocol === 'http:' || location.protocol === 'https:') history.replaceState(null, '', next.pathname + next.search);
   }
   form.addEventListener('submit', event => { event.preventDefault(); run(); });
   input.addEventListener('input', run);
