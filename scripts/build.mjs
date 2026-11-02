@@ -89,7 +89,7 @@ for(const topic of allTopics) {
   const index=siblings.findIndex(x=>x.id===topic.id);
   const prev=index>0?siblings[index-1]:null;
   const next=index+1<siblings.length?siblings[index+1]:null;
-  write(topic.url+'index.html',topicPage(topic,getRelated(knowledgeGraph,topic.id),prev,next));
+  write(topic.url+'index.html',topicPage(topic,getRelated(knowledgeGraph,topic.id),prev,next,knowledgeGraph.byId));
 }
 write('learning/index.html',learningPage());
 write('data/topic-index.json',JSON.stringify({schemaVersion:'1.2',topics:allTopics.map(topic=>({

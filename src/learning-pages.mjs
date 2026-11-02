@@ -25,7 +25,7 @@ function sourcePanel(node) {
     '<div class="evidence-links">'+anchors+'</div>' +
     '<a class="subtle-link" href="../../../sources/#doc-'+encodeURIComponent(node.subjectId)+'">查看官方目录及本地文件核验记录 →</a></section>';
 }
-export function topicPage(topic,relations,previous,next) {
+export function topicPage(topic,relations,previous,next,topicById) {
   const route='../../../';
   const breadcrumbs=[
     '<a href="'+route+'">首页</a>',
@@ -39,7 +39,7 @@ export function topicPage(topic,relations,previous,next) {
     '<span class="relation-arrow" aria-hidden="true">↗</span></a>').join(''):
     '<p class="detail-empty">暂未生成可解释的相关主题。</p>';
   const childLinks=topic.children.length?'<section class="detail-children"><h2>继续深入</h2><div class="child-links">'+topic.children.map(id=>{
-    const child=relations.find(x=>x.id===id)?.topic;
+    const child=topicById.get(id);
     return '<a href="'+route+'topics/'+e(topic.subjectId)+'/'+e(id)+'/">'+e(child?.title||'查看下级知识点')+' ↗</a>';
   }).join('')+'</div></section>':'';
   const pager='<nav class="topic-pager" aria-label="知识目录翻页">'+

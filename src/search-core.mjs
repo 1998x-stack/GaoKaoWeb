@@ -53,6 +53,7 @@ export function createSearchEngine(docs) {
       [doc.title,5],
       [doc.subjectName,1.7],
       [doc.excerpt || '',1],
+      [doc.searchText || '',0.7],
       [doc.category || '',1.5]
     ];
     const tf=countTerms(fields);
@@ -81,7 +82,13 @@ export function createSearchEngine(docs) {
         const coverage=found.length / terms.length;
         const exactPhrase=row.title.includes(phrase) || row.body.includes(phrase);
         const wordsMatched=chunks.filter(chunk=>row.title.includes(chunk)||row.body.includes(chunk)||row.subject.includes(chunk));
-        if(!exactPhrase && coverage<.49 && wordsMatched.length!==chunks.length) continue;
+        // Users often omit words in names, e.g. 牛顿定律 → 牛顿运动定律.
+        // Preserve meaning by requiring at least 60% contiguous Han bigram overlap.
+        const hanChunks=phrase.match(/\p{Script=Han}{2,}/gu)||[];
+        const hanGrams=hanChunks.flatMap(chunk=>Array.from({length:Math.max(0,chunk.length-1)},(_,i)=>chunk.slice(i,i+2)));
+        const bigramCoverage=hanGrams.length?hanGrams.filter(gram=>row.title.includes(gram)||row.body.includes(gram)).length/hanGrams.length:0;
+        const chinesePartial=hanGrams.length>=2 && bigramCoverage>=.6;
+        if(!exactPhrase && coverage<.49 && !chinesePartial && wordsMatched.length!==chunks.length) continue;
         let score=0;
         for (const term of found) {
           const n=row.tf.get(term);

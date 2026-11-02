@@ -107,3 +107,12 @@ test('invalid local storage and malformed IDs do not crash app state',()=>{
   const denied={getItem(){throw Error('denied');},setItem(){throw Error('denied');}};
   assert.equal(readState(denied).schema,2);
 });
+
+test('search handles omitted Chinese modifiers in actual physics corpus',()=>{
+  const physics=catalog.subjects.find(s=>s.id==='physics');
+  const data=normalizeSyllabus(readLegacyData(path.join(physics.dir,'data.js')),physics.id);
+  const engine=createSearchEngine(flattenSearch(physics,data));
+  const answer=engine.search('牛顿定律');
+  assert.ok(answer.total>0,'User query should retrieve 牛顿运动定律');
+  assert.ok(answer.results.some(x=>x.doc.title.includes('牛顿运动定律')));
+});
